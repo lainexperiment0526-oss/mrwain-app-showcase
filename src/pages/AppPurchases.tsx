@@ -203,7 +203,59 @@ export default function AppPurchases() {
             ))}
           </div>
         )}
+
+        <ServiceSubscriptionsList />
       </main>
     </div>
+  );
+}
+
+import { useMySubscriptions, useCancelSubscription, useToggleAutoRenew, PERIOD_PRESETS } from '@/hooks/useSubscriptionServices';
+import { Switch } from '@/components/ui/switch';
+
+function ServiceSubscriptionsList() {
+  const { user } = useAuth();
+  const { data: subs = [], isLoading } = useMySubscriptions(user?.id);
+  const cancel = useCancelSubscription();
+  const toggle = useToggleAutoRenew();
+  const periodLabel = (s: number) => PERIOD_PRESETS.find((p) => p.secs === s)?.label || `${Math.round(s / 86400)}d`;
+
+  if (!user) return null;
+  if (isLoading) return null;
+  if (!subs.length) return null;
+
+  return (
+    <section className="mt-10">
+      <h2 className="text-xl font-bold text-foreground mb-3">Subscription Plans</h2>
+      <div className="space-y-3">
+        {subs.map((s) => {
+          const expired = new Date(s.service_end_ts).getTime() <= Date.now() && !s.auto_renew;
+          return (
+            <div key={s.id} className="rounded-2xl bg-card border border-border p-4">
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="min-w-0">
+                  <p className="font-semibold text-foreground">{s.app?.name} — {s.service?.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {Number(s.price_snapshot)} Pi / {periodLabel(s.period_secs)} · {s.status}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {s.status === 'trialing' && s.trial_end_ts ? `Trial ends ${new Date(s.trial_end_ts).toLocaleDateString()}` : `Renews ${new Date(s.next_charge_ts).toLocaleDateString()}`}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">Auto-renew</span>
+                    <Switch checked={s.auto_renew} disabled={expired} onCheckedChange={(v) => toggle.mutate({ subId: s.id, autoRenew: v })} />
+                  </div>
+                  {s.status !== 'cancelled' && (
+                    <Button size="sm" variant="outline" onClick={() => cancel.mutate(s.id)}>Cancel</Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
