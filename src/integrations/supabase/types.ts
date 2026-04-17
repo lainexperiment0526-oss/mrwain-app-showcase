@@ -914,6 +914,205 @@ export type Database = {
         }
         Relationships: []
       }
+      service_subscriptions: {
+        Row: {
+          app_id: string
+          approve_periods: number
+          auto_renew: boolean
+          created_at: string
+          developer_id: string
+          id: string
+          last_payment_id: string | null
+          next_charge_ts: string
+          period_secs: number
+          price_snapshot: number
+          service_end_ts: string
+          service_id: string
+          status: string
+          subscriber_id: string
+          trial_end_ts: string | null
+          trial_period_secs: number
+          updated_at: string
+          used_trial: boolean
+        }
+        Insert: {
+          app_id: string
+          approve_periods?: number
+          auto_renew?: boolean
+          created_at?: string
+          developer_id: string
+          id?: string
+          last_payment_id?: string | null
+          next_charge_ts: string
+          period_secs: number
+          price_snapshot: number
+          service_end_ts: string
+          service_id: string
+          status?: string
+          subscriber_id: string
+          trial_end_ts?: string | null
+          trial_period_secs?: number
+          updated_at?: string
+          used_trial?: boolean
+        }
+        Update: {
+          app_id?: string
+          approve_periods?: number
+          auto_renew?: boolean
+          created_at?: string
+          developer_id?: string
+          id?: string
+          last_payment_id?: string | null
+          next_charge_ts?: string
+          period_secs?: number
+          price_snapshot?: number
+          service_end_ts?: string
+          service_id?: string
+          status?: string
+          subscriber_id?: string
+          trial_end_ts?: string | null
+          trial_period_secs?: number
+          updated_at?: string
+          used_trial?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_subscriptions_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_subscriptions_last_payment_id_fkey"
+            columns: ["last_payment_id"]
+            isOneToOne: false
+            referencedRelation: "pi_payments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_subscriptions_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_charges: {
+        Row: {
+          amount: number
+          created_at: string
+          developer_id: string
+          id: string
+          outcome: string
+          payment_id: string | null
+          reason: string | null
+          service_id: string
+          subscriber_id: string
+          subscription_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          developer_id: string
+          id?: string
+          outcome: string
+          payment_id?: string | null
+          reason?: string | null
+          service_id: string
+          subscriber_id: string
+          subscription_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          developer_id?: string
+          id?: string
+          outcome?: string
+          payment_id?: string | null
+          reason?: string | null
+          service_id?: string
+          subscriber_id?: string
+          subscription_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_charges_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "pi_payments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_charges_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_services"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_charges_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "service_subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_services: {
+        Row: {
+          app_id: string
+          approve_periods: number
+          created_at: string
+          description: string | null
+          developer_id: string
+          id: string
+          is_active: boolean
+          name: string
+          period_secs: number
+          price: number
+          trial_period_secs: number
+          updated_at: string
+        }
+        Insert: {
+          app_id: string
+          approve_periods?: number
+          created_at?: string
+          description?: string | null
+          developer_id: string
+          id?: string
+          is_active?: boolean
+          name: string
+          period_secs: number
+          price: number
+          trial_period_secs?: number
+          updated_at?: string
+        }
+        Update: {
+          app_id?: string
+          approve_periods?: number
+          created_at?: string
+          description?: string | null
+          developer_id?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          period_secs?: number
+          price?: number
+          trial_period_secs?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_services_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
