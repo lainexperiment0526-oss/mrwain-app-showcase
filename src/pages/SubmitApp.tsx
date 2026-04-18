@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Upload, X, Image, ArrowLeft, CheckCircle, Video, FileText, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { DraftPlansEditor, DraftPlan } from '@/components/DraftPlansEditor';
 
 type SubmitStep = 'details' | 'payment' | 'submitting' | 'done';
 
@@ -150,6 +151,7 @@ export default function SubmitApp() {
   const [screenshotFiles, setScreenshotFiles] = useState<File[]>([]);
   const [videoAdFile, setVideoAdFile] = useState<File | null>(null);
   const [adTitle, setAdTitle] = useState('');
+  const [subscriptionPlans, setSubscriptionPlans] = useState<DraftPlan[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [draftLoadInProgress, setDraftLoadInProgress] = useState(false);
 
@@ -279,6 +281,7 @@ export default function SubmitApp() {
       network_type: formData.network_type,
       languages: formData.languages,
       notes: formData.notes || null,
+      subscription_plans: subscriptionPlans as any,
     };
 
     if (draftId) {
@@ -346,6 +349,7 @@ export default function SubmitApp() {
       languages: draft.languages?.length ? draft.languages : ['English'],
       notes: draft.notes || '',
     });
+    setSubscriptionPlans(Array.isArray(draft.subscription_plans) ? draft.subscription_plans : []);
     setDraftId(draft.id);
     setAdTitle(draft.ad_title || '');
     setLogoFile(null);
@@ -535,6 +539,31 @@ export default function SubmitApp() {
         });
       }
 
+      // Materialize subscription plans for this app
+      const draftPlans: DraftPlan[] = Array.isArray(draft?.subscription_plans)
+        ? (draft!.subscription_plans as any)
+        : subscriptionPlans;
+      if (draftPlans.length > 0) {
+        const rows = draftPlans
+          .filter((p) => p && p.name && Number(p.price) > 0 && Number(p.period_secs) > 0)
+          .map((p) => ({
+            app_id: newApp.id,
+            developer_id: user.id,
+            name: p.name,
+            description: p.description || null,
+            price: Number(p.price),
+            period_secs: Number(p.period_secs),
+            trial_period_secs: Number(p.trial_period_secs || 0),
+            approve_periods: Number(p.approve_periods || 1),
+            is_active: p.is_active !== false,
+            access_url: p.access_url?.trim() || null,
+          }));
+        if (rows.length > 0) {
+          const { error: planError } = await supabase.from('subscription_services').insert(rows);
+          if (planError) console.error('Plan insert failed:', planError);
+        }
+      }
+
       // Mark draft as submitted
       if (draftId) {
         await supabase.from('app_drafts').delete().eq('id', draftId);
@@ -571,6 +600,7 @@ export default function SubmitApp() {
               setScreenshotFiles([]);
               setVideoAdFile(null);
               setAdTitle('');
+              setSubscriptionPlans([]);
             }}>Submit Another</Button>
           </div>
         </main>
@@ -885,6 +915,9 @@ export default function SubmitApp() {
               <Textarea id="notes" value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} placeholder="Any notes about your app (changelog, instructions, etc.)" rows={3} />
             </div>
           </div>
+
+          {/* Subscription Plans */}
+          <DraftPlansEditor plans={subscriptionPlans} onChange={setSubscriptionPlans} />
 
           {/* Screenshots */}
           <div className="space-y-2">

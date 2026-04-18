@@ -31,6 +31,7 @@ const empty = {
   trial_period_secs: 0,
   approve_periods: 12,
   is_active: true,
+  access_url: '',
 };
 
 export function SubscriptionServicesManager({ appId, developerId }: Props) {
@@ -50,6 +51,7 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
       trial_period_secs: svc.trial_period_secs,
       approve_periods: svc.approve_periods,
       is_active: svc.is_active,
+      access_url: svc.access_url || '',
     });
     setOpen(true);
   };
@@ -65,6 +67,7 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
         app_id: appId,
         developer_id: developerId,
         description: form.description || null,
+        access_url: form.access_url?.trim() || null,
       } as any);
       toast.success(form.id ? 'Service updated' : 'Service created');
       setOpen(false);
@@ -128,6 +131,16 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
                   <Label>Approve periods</Label>
                   <Input type="number" min={1} value={form.approve_periods} onChange={(e) => setForm({ ...form, approve_periods: Math.max(1, Number(e.target.value)) })} />
                 </div>
+              </div>
+              <div className="space-y-1">
+                <Label>Access URL (optional)</Label>
+                <Input
+                  type="url"
+                  value={form.access_url}
+                  onChange={(e) => setForm({ ...form, access_url: e.target.value })}
+                  placeholder="https://yourapp.com/pro-portal"
+                />
+                <p className="text-[11px] text-muted-foreground">Subscribers are sent here after a successful payment. Falls back to the app website.</p>
               </div>
               <div className="flex items-center justify-between">
                 <Label>Active</Label>

@@ -230,6 +230,8 @@ function ServiceSubscriptionsList() {
       <div className="space-y-3">
         {subs.map((s) => {
           const expired = new Date(s.service_end_ts).getTime() <= Date.now() && !s.auto_renew;
+          const accessUrl = (s.access_url || s.service?.access_url || s.app?.website_url || '').trim();
+          const canOpen = !expired && s.status !== 'cancelled' && !!accessUrl;
           return (
             <div key={s.id} className="rounded-2xl bg-card border border-border p-4">
               <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -242,11 +244,16 @@ function ServiceSubscriptionsList() {
                     {s.status === 'trialing' && s.trial_end_ts ? `Trial ends ${new Date(s.trial_end_ts).toLocaleDateString()}` : `Renews ${new Date(s.next_charge_ts).toLocaleDateString()}`}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-wrap">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-muted-foreground">Auto-renew</span>
                     <Switch checked={s.auto_renew} disabled={expired} onCheckedChange={(v) => toggle.mutate({ subId: s.id, autoRenew: v })} />
                   </div>
+                  {canOpen && (
+                    <Button size="sm" variant="outline" onClick={() => window.location.assign(normalizeUrl(accessUrl))}>
+                      Open Plan
+                    </Button>
+                  )}
                   {s.status !== 'cancelled' && (
                     <Button size="sm" variant="outline" onClick={() => cancel.mutate(s.id)}>Cancel</Button>
                   )}

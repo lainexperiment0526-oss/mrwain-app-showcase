@@ -70,12 +70,17 @@ export function SubscribeServiceList({ appId, developerId }: Props) {
         auto_renew: autoRenew,
         status: trialSecs > 0 ? 'trialing' : 'active',
         used_trial: trialSecs > 0,
+        access_url: picked.access_url || null,
       });
       if (error) throw error;
 
       toast.success(trialSecs > 0 ? 'Trial started!' : 'Subscribed!');
       qc.invalidateQueries({ queryKey: ['my-subscriptions', user.id] });
+      const accessUrl = picked.access_url?.trim();
       setPicked(null);
+      if (accessUrl) {
+        setTimeout(() => window.location.assign(accessUrl), 400);
+      }
     } catch (e: any) {
       if (e?.message === 'Payment cancelled') toast.info('Subscription cancelled');
       else toast.error(e?.message || 'Failed to subscribe');
