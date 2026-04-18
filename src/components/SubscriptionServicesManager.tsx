@@ -132,6 +132,16 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
                   <Input type="number" min={1} value={form.approve_periods} onChange={(e) => setForm({ ...form, approve_periods: Math.max(1, Number(e.target.value)) })} />
                 </div>
               </div>
+              <div className="space-y-1">
+                <Label>Access URL (optional)</Label>
+                <Input
+                  type="url"
+                  value={form.access_url}
+                  onChange={(e) => setForm({ ...form, access_url: e.target.value })}
+                  placeholder="https://yourapp.com/pro-portal"
+                />
+                <p className="text-[11px] text-muted-foreground">Subscribers are sent here after a successful payment. Falls back to the app website.</p>
+              </div>
               <div className="flex items-center justify-between">
                 <Label>Active</Label>
                 <Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} />
