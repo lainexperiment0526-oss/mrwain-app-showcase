@@ -32,6 +32,9 @@ interface AdminWithdrawal {
   status: string;
   pi_wallet_address: string | null;
   created_at: string;
+  provider?: string | null;
+  openpay_username?: string | null;
+  txid?: string | null;
 }
 
 export default function Admin() {
@@ -469,9 +472,17 @@ export default function Admin() {
                               size="sm"
                               className="bg-green-600 hover:bg-green-700"
                               disabled={processingWithdrawalId === w.id}
+                              onClick={() => payViaOpenPay(w.id)}
+                            >
+                              Pay via OpenPay
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled={processingWithdrawalId === w.id}
                               onClick={() => updateWithdrawalStatus(w.id, 'completed')}
                             >
-                              Approve
+                              Mark Paid
                             </Button>
                             <Button
                               size="sm"
