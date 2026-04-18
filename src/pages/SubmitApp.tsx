@@ -539,6 +539,31 @@ export default function SubmitApp() {
         });
       }
 
+      // Materialize subscription plans for this app
+      const draftPlans: DraftPlan[] = Array.isArray(draft?.subscription_plans)
+        ? (draft!.subscription_plans as any)
+        : subscriptionPlans;
+      if (draftPlans.length > 0) {
+        const rows = draftPlans
+          .filter((p) => p && p.name && Number(p.price) > 0 && Number(p.period_secs) > 0)
+          .map((p) => ({
+            app_id: newApp.id,
+            developer_id: user.id,
+            name: p.name,
+            description: p.description || null,
+            price: Number(p.price),
+            period_secs: Number(p.period_secs),
+            trial_period_secs: Number(p.trial_period_secs || 0),
+            approve_periods: Number(p.approve_periods || 1),
+            is_active: p.is_active !== false,
+            access_url: p.access_url?.trim() || null,
+          }));
+        if (rows.length > 0) {
+          const { error: planError } = await supabase.from('subscription_services').insert(rows);
+          if (planError) console.error('Plan insert failed:', planError);
+        }
+      }
+
       // Mark draft as submitted
       if (draftId) {
         await supabase.from('app_drafts').delete().eq('id', draftId);
