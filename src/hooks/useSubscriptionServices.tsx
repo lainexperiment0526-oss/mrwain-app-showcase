@@ -12,6 +12,7 @@ export interface SubscriptionService {
   trial_period_secs: number;
   approve_periods: number;
   is_active: boolean;
+  access_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -32,6 +33,7 @@ export interface ServiceSubscription {
   auto_renew: boolean;
   status: 'trialing' | 'active' | 'cancelled' | 'expired';
   used_trial: boolean;
+  access_url: string | null;
   last_payment_id: string | null;
   created_at: string;
   updated_at: string;

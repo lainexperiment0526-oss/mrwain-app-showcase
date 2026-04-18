@@ -31,6 +31,7 @@ const empty = {
   trial_period_secs: 0,
   approve_periods: 12,
   is_active: true,
+  access_url: '',
 };
 
 export function SubscriptionServicesManager({ appId, developerId }: Props) {
@@ -50,6 +51,7 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
       trial_period_secs: svc.trial_period_secs,
       approve_periods: svc.approve_periods,
       is_active: svc.is_active,
+      access_url: svc.access_url || '',
     });
     setOpen(true);
   };
@@ -65,6 +67,7 @@ export function SubscriptionServicesManager({ appId, developerId }: Props) {
         app_id: appId,
         developer_id: developerId,
         description: form.description || null,
+        access_url: form.access_url?.trim() || null,
       } as any);
       toast.success(form.id ? 'Service updated' : 'Service created');
       setOpen(false);
