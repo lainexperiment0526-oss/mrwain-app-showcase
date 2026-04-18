@@ -341,6 +341,7 @@ export type Database = {
           pricing_model: string
           privacy_policy_url: string | null
           screenshot_urls: string[] | null
+          subscription_plans: Json
           tagline: string | null
           tags: string[] | null
           terms_of_service_url: string | null
@@ -373,6 +374,7 @@ export type Database = {
           pricing_model?: string
           privacy_policy_url?: string | null
           screenshot_urls?: string[] | null
+          subscription_plans?: Json
           tagline?: string | null
           tags?: string[] | null
           terms_of_service_url?: string | null
@@ -405,6 +407,7 @@ export type Database = {
           pricing_model?: string
           privacy_policy_url?: string | null
           screenshot_urls?: string[] | null
+          subscription_plans?: Json
           tagline?: string | null
           tags?: string[] | null
           terms_of_service_url?: string | null
@@ -925,6 +928,7 @@ export type Database = {
       }
       service_subscriptions: {
         Row: {
+          access_url: string | null
           app_id: string
           approve_periods: number
           auto_renew: boolean
@@ -945,6 +949,7 @@ export type Database = {
           used_trial: boolean
         }
         Insert: {
+          access_url?: string | null
           app_id: string
           approve_periods?: number
           auto_renew?: boolean
@@ -965,6 +970,7 @@ export type Database = {
           used_trial?: boolean
         }
         Update: {
+          access_url?: string | null
           app_id?: string
           approve_periods?: number
           auto_renew?: boolean
@@ -1071,6 +1077,7 @@ export type Database = {
       }
       subscription_services: {
         Row: {
+          access_url: string | null
           app_id: string
           approve_periods: number
           created_at: string
@@ -1085,6 +1092,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          access_url?: string | null
           app_id: string
           approve_periods?: number
           created_at?: string
@@ -1099,6 +1107,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          access_url?: string | null
           app_id?: string
           approve_periods?: number
           created_at?: string
