@@ -865,6 +865,7 @@ export type Database = {
           memo: string | null
           metadata: Json | null
           payment_id: string
+          provider: string
           status: string
           txid: string | null
           updated_at: string
@@ -877,6 +878,7 @@ export type Database = {
           memo?: string | null
           metadata?: Json | null
           payment_id: string
+          provider?: string
           status?: string
           txid?: string | null
           updated_at?: string
@@ -889,6 +891,7 @@ export type Database = {
           memo?: string | null
           metadata?: Json | null
           payment_id?: string
+          provider?: string
           status?: string
           txid?: string | null
           updated_at?: string
@@ -904,6 +907,7 @@ export type Database = {
           email_verified: boolean | null
           id: string
           is_admin: boolean | null
+          openpay_username: string | null
           uses_openapp: boolean | null
         }
         Insert: {
@@ -913,6 +917,7 @@ export type Database = {
           email_verified?: boolean | null
           id: string
           is_admin?: boolean | null
+          openpay_username?: string | null
           uses_openapp?: boolean | null
         }
         Update: {
@@ -922,6 +927,7 @@ export type Database = {
           email_verified?: boolean | null
           id?: string
           is_admin?: boolean | null
+          openpay_username?: string | null
           uses_openapp?: boolean | null
         }
         Relationships: []
@@ -1155,8 +1161,10 @@ export type Database = {
           created_at: string
           developer_id: string
           id: string
+          openpay_username: string | null
           pi_wallet_address: string | null
           processed_at: string | null
+          provider: string
           status: string
           txid: string | null
           updated_at: string
@@ -1166,8 +1174,10 @@ export type Database = {
           created_at?: string
           developer_id: string
           id?: string
+          openpay_username?: string | null
           pi_wallet_address?: string | null
           processed_at?: string | null
+          provider?: string
           status?: string
           txid?: string | null
           updated_at?: string
@@ -1177,8 +1187,10 @@ export type Database = {
           created_at?: string
           developer_id?: string
           id?: string
+          openpay_username?: string | null
           pi_wallet_address?: string | null
           processed_at?: string | null
+          provider?: string
           status?: string
           txid?: string | null
           updated_at?: string
