@@ -110,71 +110,81 @@ export default function AppDetail() {
           return;
         }
         const purchaseType = app.payment_type === 'monthly' ? 'monthly' : 'onetime';
-        if (!isPiReady) {
-          toast.error('Pi payment requires Pi Browser');
-          return;
-        }
-        if (!isPiAuthenticated) {
-          const piUser = await authenticateWithPi();
-          if (!piUser) {
-            toast.error('Pi authentication required for payment');
-            return;
-          }
-        }
-        setIsPaying(true);
-        try {
-          await createPiPayment(
-            app.price_amount,
-            `${purchaseType === 'monthly' ? 'Subscription payment' : 'Payment'} for ${app.name}`,
-            { type: 'app_purchase', app_id: appId, developer_id: app.user_id, purchase_type: purchaseType }
-          );
-
-          let expiresAt: string | null = null;
-          if (purchaseType === 'monthly') {
-            const base = purchase?.purchase_type === 'monthly'
-              && purchase?.expires_at
-              && new Date(purchase.expires_at).getTime() > Date.now()
-              ? new Date(purchase.expires_at)
-              : new Date();
-            const next = new Date(base);
-            next.setMonth(next.getMonth() + 1);
-            expiresAt = next.toISOString();
-          }
-
-          const { error: upsertError } = await supabase
-            .from('app_purchases')
-            .upsert(
-              {
-                user_id: user.id,
-                app_id: appId,
-                purchase_type: purchaseType,
-                status: 'active',
-                paid_at: new Date().toISOString(),
-                expires_at: expiresAt,
-              },
-              { onConflict: 'user_id,app_id' }
-            );
-
-          if (upsertError) throw upsertError;
-          queryClient.invalidateQueries({ queryKey: ['app-purchases', user.id] });
-          toast.success('Payment successful!');
-        } catch (err: any) {
-          if (err.message === 'Payment cancelled') {
-            toast.info('Payment cancelled');
-          } else {
-            toast.error('Payment failed');
-          }
-          setIsPaying(false);
-          return;
-        }
-        setIsPaying(false);
+        // Open payment-method picker; actual payment continues in processPayment()
+        setPendingOpen({ url: normalizedUrl, appId });
+        setShowPayMethodFor({ purchaseType });
+        return;
       }
     }
 
     setPendingOpen({ url: normalizedUrl, appId });
     setIsOpening(true);
     setShowOpenAd(true);
-  }, [normalizeUrl, app, user, isPiReady, isPiAuthenticated, authenticateWithPi, createPiPayment, navigate, queryClient]);
+  }, [normalizeUrl, app, user]);
+
+  const processPayment = useCallback(async (method: 'pi' | 'openpay') => {
+    if (!app || !user || !showPayMethodFor) return;
+    const { purchaseType } = showPayMethodFor;
+    const appId = app.id;
+    setShowPayMethodFor(null);
+    setIsPaying(true);
+
+    try {
+      if (method === 'pi') {
+        if (!isPiReady) { toast.error('Pi payment requires Pi Browser'); return; }
+        if (!isPiAuthenticated) {
+          const piUser = await authenticateWithPi();
+          if (!piUser) { toast.error('Pi authentication required'); return; }
+        }
+        await createPiPayment(
+          app.price_amount,
+          `${purchaseType === 'monthly' ? 'Subscription payment' : 'Payment'} for ${app.name}`,
+          { type: 'app_purchase', app_id: appId, developer_id: app.user_id!, purchase_type: purchaseType },
+        );
+      } else {
+        await createOpenPayPayment(
+          app.price_amount,
+          `${purchaseType === 'monthly' ? 'Subscription payment' : 'Payment'} for ${app.name}`,
+          { type: 'app_purchase', app_id: appId, developer_id: app.user_id!, purchase_type: purchaseType },
+        );
+      }
+
+      let expiresAt: string | null = null;
+      if (purchaseType === 'monthly') {
+        const next = new Date();
+        next.setMonth(next.getMonth() + 1);
+        expiresAt = next.toISOString();
+      }
+
+      const { error: upsertError } = await supabase
+        .from('app_purchases')
+        .upsert(
+          {
+            user_id: user.id,
+            app_id: appId,
+            purchase_type: purchaseType,
+            status: 'active',
+            paid_at: new Date().toISOString(),
+            expires_at: expiresAt,
+          },
+          { onConflict: 'user_id,app_id' },
+        );
+
+      if (upsertError) throw upsertError;
+      queryClient.invalidateQueries({ queryKey: ['app-purchases', user.id] });
+      toast.success('Payment successful!');
+
+      // Continue to open
+      setIsOpening(true);
+      setShowOpenAd(true);
+    } catch (err: any) {
+      if (err?.message === 'Payment cancelled') toast.info('Payment cancelled');
+      else toast.error(err?.message || 'Payment failed');
+      setPendingOpen(null);
+    } finally {
+      setIsPaying(false);
+    }
+  }, [app, user, showPayMethodFor, isPiReady, isPiAuthenticated, authenticateWithPi, createPiPayment, createOpenPayPayment, queryClient]);
 
   const handleOpenAfterAd = useCallback(() => {
     const next = pendingOpen;
