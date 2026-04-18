@@ -600,6 +600,7 @@ export default function SubmitApp() {
               setScreenshotFiles([]);
               setVideoAdFile(null);
               setAdTitle('');
+              setSubscriptionPlans([]);
             }}>Submit Another</Button>
           </div>
         </main>
