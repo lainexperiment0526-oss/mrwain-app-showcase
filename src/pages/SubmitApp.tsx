@@ -146,6 +146,7 @@ export default function SubmitApp() {
     network_type: 'mainnet',
     languages: ['English'] as string[],
     notes: '',
+    download_url: '',
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [screenshotFiles, setScreenshotFiles] = useState<File[]>([]);
@@ -281,6 +282,7 @@ export default function SubmitApp() {
       network_type: formData.network_type,
       languages: formData.languages,
       notes: formData.notes || null,
+      download_url: formData.download_url || null,
       subscription_plans: subscriptionPlans as any,
     };
 
@@ -348,6 +350,7 @@ export default function SubmitApp() {
       network_type: draft.network_type || 'mainnet',
       languages: draft.languages?.length ? draft.languages : ['English'],
       notes: draft.notes || '',
+      download_url: (draft as any).download_url || '',
     });
     setSubscriptionPlans(Array.isArray(draft.subscription_plans) ? draft.subscription_plans : []);
     setDraftId(draft.id);
@@ -511,6 +514,7 @@ export default function SubmitApp() {
           network_type: formData.network_type,
           languages: formData.languages,
           notes: formData.notes || null,
+          download_url: formData.download_url || null,
         })
         .select()
         .single();
@@ -595,7 +599,7 @@ export default function SubmitApp() {
             <Button variant="outline" onClick={() => {
               setStep('details');
               setDraftId(null);
-              setFormData({ name: '', tagline: '', description: '', website_url: '', category_id: '', tags: '', version: '1.0', launch_at: '', developer_name: '', age_rating: '4+', whats_new: '', privacy_policy_url: '', terms_of_service_url: '', developer_website_url: '', pricing_model: 'free', price_amount: '', payment_type: 'free', network_type: 'mainnet', languages: ['English'], notes: '' });
+              setFormData({ name: '', tagline: '', description: '', website_url: '', category_id: '', tags: '', version: '1.0', launch_at: '', developer_name: '', age_rating: '4+', whats_new: '', privacy_policy_url: '', terms_of_service_url: '', developer_website_url: '', pricing_model: 'free', price_amount: '', payment_type: 'free', network_type: 'mainnet', languages: ['English'], notes: '', download_url: '' });
               setLogoFile(null);
               setScreenshotFiles([]);
               setVideoAdFile(null);
@@ -752,6 +756,11 @@ export default function SubmitApp() {
             <div className="space-y-2">
               <Label htmlFor="website_url">Website URL *</Label>
               <Input id="website_url" type="url" value={formData.website_url} onChange={(e) => setFormData({ ...formData, website_url: e.target.value })} placeholder="https://example.com" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="download_url">Download Link (optional)</Label>
+              <Input id="download_url" type="url" value={formData.download_url} onChange={(e) => setFormData({ ...formData, download_url: e.target.value })} placeholder="https://example.com/app.apk" />
+              <p className="text-xs text-muted-foreground">Direct link to APK / installer. Shown to users as an optional Download button.</p>
             </div>
           </div>
 
