@@ -320,6 +320,38 @@ export default function DeveloperDashboard() {
           </div>
         </div>
 
+        {pendingProofs.length > 0 && (
+          <div className="rounded-2xl bg-card p-6 border border-border mb-8">
+            <h2 className="text-lg font-semibold text-foreground mb-4">
+              Pending Payment Proofs ({pendingProofs.length})
+            </h2>
+            <p className="text-xs text-muted-foreground mb-3">
+              Users who paid via your OpenPay or DropPay link are waiting for verification. Confirm the transaction in your payment provider, then approve.
+            </p>
+            <div className="space-y-3">
+              {pendingProofs.map((p) => (
+                <div key={p.id} className="p-3 rounded-xl bg-secondary/50">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-foreground">{p.app_name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {p.provider === 'droppay_link' ? 'DropPay' : 'OpenPay'} · {p.purchase_type} · {new Date(p.paid_at).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-muted-foreground break-all">
+                        TXID: <span className="font-mono">{p.proof_txid || '—'}</span>
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 gap-2">
+                      <Button size="sm" onClick={() => handleProofDecision(p, 'approve')}>Approve</Button>
+                      <Button size="sm" variant="outline" onClick={() => handleProofDecision(p, 'reject')}>Reject</Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="rounded-2xl bg-card p-6 border border-border mb-8">
           <h2 className="text-lg font-semibold text-foreground mb-4">Earnings by App</h2>
           {loadingData ? (
