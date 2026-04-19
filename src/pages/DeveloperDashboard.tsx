@@ -28,11 +28,23 @@ interface WithdrawalRequest {
   pi_wallet_address?: string | null;
 }
 
+interface PendingProof {
+  id: string;
+  app_id: string;
+  app_name: string;
+  user_id: string;
+  proof_txid: string | null;
+  provider: string;
+  purchase_type: string;
+  paid_at: string;
+}
+
 export default function DeveloperDashboard() {
   const { user, loading } = useAuth();
   
   const [earnings, setEarnings] = useState<EarningsSummary[]>([]);
   const [withdrawals, setWithdrawals] = useState<WithdrawalRequest[]>([]);
+  const [pendingProofs, setPendingProofs] = useState<PendingProof[]>([]);
   const [totalGross, setTotalGross] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
   const [totalPlatformFee, setTotalPlatformFee] = useState(0);
@@ -111,6 +123,33 @@ export default function DeveloperDashboard() {
           .filter((w) => w.status === 'completed')
           .reduce((sum, w) => sum + Number(w.amount), 0)
       );
+      // Load pending proof-of-payment from external links
+      const { data: ownedApps } = await supabase
+        .from('apps')
+        .select('id, name, user_id')
+        .eq('user_id', user.id);
+      const ownedAppIds = (ownedApps || []).map((a) => a.id);
+      const ownedAppNames = new Map((ownedApps || []).map((a) => [a.id, a.name]));
+      if (ownedAppIds.length > 0) {
+        const { data: proofs } = await supabase
+          .from('app_purchases')
+          .select('id, app_id, user_id, proof_txid, provider, purchase_type, paid_at, proof_status, status')
+          .in('app_id', ownedAppIds)
+          .eq('proof_status', 'pending')
+          .order('paid_at', { ascending: false });
+        setPendingProofs(
+          (proofs || []).map((p: any) => ({
+            id: p.id,
+            app_id: p.app_id,
+            app_name: ownedAppNames.get(p.app_id) || 'Unknown',
+            user_id: p.user_id,
+            proof_txid: p.proof_txid,
+            provider: p.provider,
+            purchase_type: p.purchase_type,
+            paid_at: p.paid_at,
+          })),
+        );
+      }
     } catch (err) {
       console.error('Failed to load dashboard:', err);
     } finally {
@@ -164,6 +203,31 @@ export default function DeveloperDashboard() {
     } finally {
       setIsWithdrawing(false);
     }
+  };
+
+  const handleProofDecision = async (proof: PendingProof, decision: 'approve' | 'reject') => {
+    if (decision === 'approve') {
+      let expiresAt: string | null = null;
+      if (proof.purchase_type === 'monthly') {
+        const next = new Date();
+        next.setMonth(next.getMonth() + 1);
+        expiresAt = next.toISOString();
+      }
+      const { error } = await supabase
+        .from('app_purchases')
+        .update({ status: 'active', proof_status: 'verified', expires_at: expiresAt })
+        .eq('id', proof.id);
+      if (error) { toast.error(error.message); return; }
+      toast.success('Purchase approved');
+    } else {
+      const { error } = await supabase
+        .from('app_purchases')
+        .update({ status: 'rejected', proof_status: 'rejected' })
+        .eq('id', proof.id);
+      if (error) { toast.error(error.message); return; }
+      toast.info('Proof rejected');
+    }
+    loadDashboardData();
   };
 
   if (!loading && !user) {
