@@ -95,8 +95,8 @@ function AppContent() {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
+          <OpenAppModal open={showOpenAppModal} onOpenChange={setShowOpenAppModal} />
         </BrowserRouter>
-        <OpenAppModal open={showOpenAppModal} onOpenChange={setShowOpenAppModal} />
     </>
   );
 }
