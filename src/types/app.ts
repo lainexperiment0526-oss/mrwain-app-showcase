@@ -38,6 +38,8 @@ export interface App {
   is_verified: boolean;
   verified_until: string | null;
   download_url?: string | null;
+  openpay_link?: string | null;
+  droppay_link?: string | null;
 }
 
 export interface Category {

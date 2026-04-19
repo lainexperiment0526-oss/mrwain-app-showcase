@@ -50,6 +50,8 @@ export default function AppDetail() {
   const [nowMs, setNowMs] = useState(Date.now());
   const [showPiAuthModal, setShowPiAuthModal] = useState(false);
   const [showPayMethodFor, setShowPayMethodFor] = useState<{ purchaseType: 'onetime' | 'monthly' } | null>(null);
+  const [proofPrompt, setProofPrompt] = useState<{ provider: 'openpay_link' | 'droppay_link'; purchaseType: 'onetime' | 'monthly' } | null>(null);
+  const [proofTxid, setProofTxid] = useState('');
 
   const normalizeUrl = useCallback((url: string) => {
     const trimmed = url.trim();
@@ -122,10 +124,22 @@ export default function AppDetail() {
     setShowOpenAd(true);
   }, [normalizeUrl, app, user]);
 
-  const processPayment = useCallback(async (method: 'pi' | 'openpay') => {
+  const processPayment = useCallback(async (method: 'pi' | 'openpay' | 'openpay_link' | 'droppay_link') => {
     if (!app || !user || !showPayMethodFor) return;
     const { purchaseType } = showPayMethodFor;
     const appId = app.id;
+
+    // External developer-provided links: open in new tab, then prompt for proof
+    if (method === 'openpay_link' || method === 'droppay_link') {
+      const link = method === 'openpay_link' ? (app as any).openpay_link : (app as any).droppay_link;
+      if (!link) { toast.error('Developer has not configured this payment method'); return; }
+      window.open(link, '_blank', 'noopener,noreferrer');
+      setShowPayMethodFor(null);
+      setProofTxid('');
+      setProofPrompt({ provider: method, purchaseType });
+      return;
+    }
+
     setShowPayMethodFor(null);
     setIsPaying(true);
 
@@ -166,7 +180,9 @@ export default function AppDetail() {
             status: 'active',
             paid_at: new Date().toISOString(),
             expires_at: expiresAt,
-          },
+            provider: method,
+            proof_status: 'verified',
+          } as any,
           { onConflict: 'user_id,app_id' },
         );
 
@@ -185,6 +201,37 @@ export default function AppDetail() {
       setIsPaying(false);
     }
   }, [app, user, showPayMethodFor, isPiReady, isPiAuthenticated, authenticateWithPi, createPiPayment, createOpenPayPayment, queryClient]);
+
+  const submitProof = useCallback(async () => {
+    if (!app || !user || !proofPrompt) return;
+    const txid = proofTxid.trim();
+    if (txid.length < 4) { toast.error('Please enter a valid transaction ID'); return; }
+    const { purchaseType, provider } = proofPrompt;
+    setIsPaying(true);
+    try {
+      const { error } = await supabase.from('app_purchases').upsert({
+        user_id: user.id,
+        app_id: app.id,
+        purchase_type: purchaseType,
+        status: 'pending',
+        paid_at: new Date().toISOString(),
+        expires_at: null,
+        provider,
+        proof_txid: txid,
+        proof_status: 'pending',
+      } as any, { onConflict: 'user_id,app_id' });
+      if (error) throw error;
+      toast.success('Proof submitted. Developer will verify and unlock access shortly.');
+      setProofPrompt(null);
+      setProofTxid('');
+      setPendingOpen(null);
+      queryClient.invalidateQueries({ queryKey: ['app-purchases', user.id] });
+    } catch (err: any) {
+      toast.error(err?.message || 'Failed to submit proof');
+    } finally {
+      setIsPaying(false);
+    }
+  }, [app, user, proofPrompt, proofTxid, queryClient]);
 
   const handleOpenAfterAd = useCallback(() => {
     const next = pendingOpen;
@@ -344,6 +391,35 @@ export default function AppDetail() {
           <Button variant="secondary" onClick={() => processPayment('openpay')} disabled={isPaying}>
             Pay with OpenPay ({app?.price_amount} OUSD)
           </Button>
+          {(app as any)?.openpay_link && (
+            <Button variant="outline" onClick={() => processPayment('openpay_link')} disabled={isPaying}>
+              Pay via Developer's OpenPay link
+            </Button>
+          )}
+          {(app as any)?.droppay_link && (
+            <Button variant="outline" onClick={() => processPayment('droppay_link')} disabled={isPaying}>
+              Pay via Developer's DropPay link
+            </Button>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+    <Dialog open={!!proofPrompt} onOpenChange={(o) => { if (!o) { setProofPrompt(null); setProofTxid(''); } }}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Confirm your payment</DialogTitle>
+          <DialogDescription>
+            After paying via the developer's {proofPrompt?.provider === 'droppay_link' ? 'DropPay' : 'OpenPay'} link, paste your transaction ID below. The developer will verify and unlock access.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-2 pt-2">
+          <input
+            value={proofTxid}
+            onChange={(e) => setProofTxid(e.target.value)}
+            placeholder="Transaction ID / receipt reference"
+            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          />
+          <Button onClick={submitProof} disabled={isPaying}>Submit proof</Button>
         </div>
       </DialogContent>
     </Dialog>

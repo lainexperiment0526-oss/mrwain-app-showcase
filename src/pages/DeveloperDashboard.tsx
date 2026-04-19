@@ -28,11 +28,23 @@ interface WithdrawalRequest {
   pi_wallet_address?: string | null;
 }
 
+interface PendingProof {
+  id: string;
+  app_id: string;
+  app_name: string;
+  user_id: string;
+  proof_txid: string | null;
+  provider: string;
+  purchase_type: string;
+  paid_at: string;
+}
+
 export default function DeveloperDashboard() {
   const { user, loading } = useAuth();
   
   const [earnings, setEarnings] = useState<EarningsSummary[]>([]);
   const [withdrawals, setWithdrawals] = useState<WithdrawalRequest[]>([]);
+  const [pendingProofs, setPendingProofs] = useState<PendingProof[]>([]);
   const [totalGross, setTotalGross] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
   const [totalPlatformFee, setTotalPlatformFee] = useState(0);
@@ -111,6 +123,33 @@ export default function DeveloperDashboard() {
           .filter((w) => w.status === 'completed')
           .reduce((sum, w) => sum + Number(w.amount), 0)
       );
+      // Load pending proof-of-payment from external links
+      const { data: ownedApps } = await supabase
+        .from('apps')
+        .select('id, name, user_id')
+        .eq('user_id', user.id);
+      const ownedAppIds = (ownedApps || []).map((a) => a.id);
+      const ownedAppNames = new Map((ownedApps || []).map((a) => [a.id, a.name]));
+      if (ownedAppIds.length > 0) {
+        const { data: proofs } = await supabase
+          .from('app_purchases')
+          .select('id, app_id, user_id, proof_txid, provider, purchase_type, paid_at, proof_status, status')
+          .in('app_id', ownedAppIds)
+          .eq('proof_status', 'pending')
+          .order('paid_at', { ascending: false });
+        setPendingProofs(
+          (proofs || []).map((p: any) => ({
+            id: p.id,
+            app_id: p.app_id,
+            app_name: ownedAppNames.get(p.app_id) || 'Unknown',
+            user_id: p.user_id,
+            proof_txid: p.proof_txid,
+            provider: p.provider,
+            purchase_type: p.purchase_type,
+            paid_at: p.paid_at,
+          })),
+        );
+      }
     } catch (err) {
       console.error('Failed to load dashboard:', err);
     } finally {
@@ -164,6 +203,31 @@ export default function DeveloperDashboard() {
     } finally {
       setIsWithdrawing(false);
     }
+  };
+
+  const handleProofDecision = async (proof: PendingProof, decision: 'approve' | 'reject') => {
+    if (decision === 'approve') {
+      let expiresAt: string | null = null;
+      if (proof.purchase_type === 'monthly') {
+        const next = new Date();
+        next.setMonth(next.getMonth() + 1);
+        expiresAt = next.toISOString();
+      }
+      const { error } = await supabase
+        .from('app_purchases')
+        .update({ status: 'active', proof_status: 'verified', expires_at: expiresAt })
+        .eq('id', proof.id);
+      if (error) { toast.error(error.message); return; }
+      toast.success('Purchase approved');
+    } else {
+      const { error } = await supabase
+        .from('app_purchases')
+        .update({ status: 'rejected', proof_status: 'rejected' })
+        .eq('id', proof.id);
+      if (error) { toast.error(error.message); return; }
+      toast.info('Proof rejected');
+    }
+    loadDashboardData();
   };
 
   if (!loading && !user) {
@@ -255,6 +319,38 @@ export default function DeveloperDashboard() {
             </Button>
           </div>
         </div>
+
+        {pendingProofs.length > 0 && (
+          <div className="rounded-2xl bg-card p-6 border border-border mb-8">
+            <h2 className="text-lg font-semibold text-foreground mb-4">
+              Pending Payment Proofs ({pendingProofs.length})
+            </h2>
+            <p className="text-xs text-muted-foreground mb-3">
+              Users who paid via your OpenPay or DropPay link are waiting for verification. Confirm the transaction in your payment provider, then approve.
+            </p>
+            <div className="space-y-3">
+              {pendingProofs.map((p) => (
+                <div key={p.id} className="p-3 rounded-xl bg-secondary/50">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-foreground">{p.app_name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {p.provider === 'droppay_link' ? 'DropPay' : 'OpenPay'} · {p.purchase_type} · {new Date(p.paid_at).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-muted-foreground break-all">
+                        TXID: <span className="font-mono">{p.proof_txid || '—'}</span>
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 gap-2">
+                      <Button size="sm" onClick={() => handleProofDecision(p, 'approve')}>Approve</Button>
+                      <Button size="sm" variant="outline" onClick={() => handleProofDecision(p, 'reject')}>Reject</Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="rounded-2xl bg-card p-6 border border-border mb-8">
           <h2 className="text-lg font-semibold text-foreground mb-4">Earnings by App</h2>

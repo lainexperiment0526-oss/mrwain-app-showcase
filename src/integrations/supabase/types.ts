@@ -369,6 +369,7 @@ export type Database = {
           developer_name: string | null
           developer_website_url: string | null
           download_url: string | null
+          droppay_link: string | null
           id: string
           languages: string[] | null
           launch_at: string | null
@@ -376,6 +377,7 @@ export type Database = {
           name: string
           network_type: string
           notes: string | null
+          openpay_link: string | null
           payment_id: string | null
           payment_status: string
           payment_type: string | null
@@ -403,6 +405,7 @@ export type Database = {
           developer_name?: string | null
           developer_website_url?: string | null
           download_url?: string | null
+          droppay_link?: string | null
           id?: string
           languages?: string[] | null
           launch_at?: string | null
@@ -410,6 +413,7 @@ export type Database = {
           name: string
           network_type?: string
           notes?: string | null
+          openpay_link?: string | null
           payment_id?: string | null
           payment_status?: string
           payment_type?: string | null
@@ -437,6 +441,7 @@ export type Database = {
           developer_name?: string | null
           developer_website_url?: string | null
           download_url?: string | null
+          droppay_link?: string | null
           id?: string
           languages?: string[] | null
           launch_at?: string | null
@@ -444,6 +449,7 @@ export type Database = {
           name?: string
           network_type?: string
           notes?: string | null
+          openpay_link?: string | null
           payment_id?: string | null
           payment_status?: string
           payment_type?: string | null
@@ -512,6 +518,9 @@ export type Database = {
           id: string
           last_payment_id: string | null
           paid_at: string
+          proof_status: string
+          proof_txid: string | null
+          provider: string
           purchase_type: string
           status: string
           updated_at: string
@@ -524,6 +533,9 @@ export type Database = {
           id?: string
           last_payment_id?: string | null
           paid_at?: string
+          proof_status?: string
+          proof_txid?: string | null
+          provider?: string
           purchase_type: string
           status?: string
           updated_at?: string
@@ -536,6 +548,9 @@ export type Database = {
           id?: string
           last_payment_id?: string | null
           paid_at?: string
+          proof_status?: string
+          proof_txid?: string | null
+          provider?: string
           purchase_type?: string
           status?: string
           updated_at?: string
@@ -668,6 +683,7 @@ export type Database = {
           developer_name: string | null
           developer_website_url: string | null
           download_url: string | null
+          droppay_link: string | null
           has_in_app_purchases: boolean | null
           id: string
           is_featured: boolean | null
@@ -679,6 +695,7 @@ export type Database = {
           name: string
           network_type: string
           notes: string | null
+          openpay_link: string | null
           payment_type: string | null
           price_amount: number | null
           pricing_model: string
@@ -706,6 +723,7 @@ export type Database = {
           developer_name?: string | null
           developer_website_url?: string | null
           download_url?: string | null
+          droppay_link?: string | null
           has_in_app_purchases?: boolean | null
           id?: string
           is_featured?: boolean | null
@@ -717,6 +735,7 @@ export type Database = {
           name: string
           network_type?: string
           notes?: string | null
+          openpay_link?: string | null
           payment_type?: string | null
           price_amount?: number | null
           pricing_model?: string
@@ -744,6 +763,7 @@ export type Database = {
           developer_name?: string | null
           developer_website_url?: string | null
           download_url?: string | null
+          droppay_link?: string | null
           has_in_app_purchases?: boolean | null
           id?: string
           is_featured?: boolean | null
@@ -755,6 +775,7 @@ export type Database = {
           name?: string
           network_type?: string
           notes?: string | null
+          openpay_link?: string | null
           payment_type?: string | null
           price_amount?: number | null
           pricing_model?: string
@@ -952,6 +973,8 @@ export type Database = {
           apk_installed_at: string | null
           auth_method: string | null
           created_at: string
+          default_droppay_link: string | null
+          default_openpay_link: string | null
           email: string | null
           email_verified: boolean | null
           id: string
@@ -966,6 +989,8 @@ export type Database = {
           apk_installed_at?: string | null
           auth_method?: string | null
           created_at?: string
+          default_droppay_link?: string | null
+          default_openpay_link?: string | null
           email?: string | null
           email_verified?: boolean | null
           id: string
@@ -980,6 +1005,8 @@ export type Database = {
           apk_installed_at?: string | null
           auth_method?: string | null
           created_at?: string
+          default_droppay_link?: string | null
+          default_openpay_link?: string | null
           email?: string | null
           email_verified?: boolean | null
           id?: string

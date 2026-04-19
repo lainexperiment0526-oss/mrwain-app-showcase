@@ -147,6 +147,8 @@ export default function SubmitApp() {
     languages: ['English'] as string[],
     notes: '',
     download_url: '',
+    openpay_link: '',
+    droppay_link: '',
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [screenshotFiles, setScreenshotFiles] = useState<File[]>([]);
@@ -283,6 +285,8 @@ export default function SubmitApp() {
       languages: formData.languages,
       notes: formData.notes || null,
       download_url: formData.download_url || null,
+      openpay_link: formData.openpay_link || null,
+      droppay_link: formData.droppay_link || null,
       subscription_plans: subscriptionPlans as any,
     };
 
@@ -351,6 +355,8 @@ export default function SubmitApp() {
       languages: draft.languages?.length ? draft.languages : ['English'],
       notes: draft.notes || '',
       download_url: (draft as any).download_url || '',
+      openpay_link: (draft as any).openpay_link || '',
+      droppay_link: (draft as any).droppay_link || '',
     });
     setSubscriptionPlans(Array.isArray(draft.subscription_plans) ? draft.subscription_plans : []);
     setDraftId(draft.id);
@@ -515,6 +521,8 @@ export default function SubmitApp() {
           languages: formData.languages,
           notes: formData.notes || null,
           download_url: formData.download_url || null,
+          openpay_link: formData.openpay_link || null,
+          droppay_link: formData.droppay_link || null,
         })
         .select()
         .single();
@@ -599,7 +607,7 @@ export default function SubmitApp() {
             <Button variant="outline" onClick={() => {
               setStep('details');
               setDraftId(null);
-              setFormData({ name: '', tagline: '', description: '', website_url: '', category_id: '', tags: '', version: '1.0', launch_at: '', developer_name: '', age_rating: '4+', whats_new: '', privacy_policy_url: '', terms_of_service_url: '', developer_website_url: '', pricing_model: 'free', price_amount: '', payment_type: 'free', network_type: 'mainnet', languages: ['English'], notes: '', download_url: '' });
+              setFormData({ name: '', tagline: '', description: '', website_url: '', category_id: '', tags: '', version: '1.0', launch_at: '', developer_name: '', age_rating: '4+', whats_new: '', privacy_policy_url: '', terms_of_service_url: '', developer_website_url: '', pricing_model: 'free', price_amount: '', payment_type: 'free', network_type: 'mainnet', languages: ['English'], notes: '', download_url: '', openpay_link: '', droppay_link: '' });
               setLogoFile(null);
               setScreenshotFiles([]);
               setVideoAdFile(null);
@@ -761,6 +769,16 @@ export default function SubmitApp() {
               <Label htmlFor="download_url">Download Link (optional)</Label>
               <Input id="download_url" type="url" value={formData.download_url} onChange={(e) => setFormData({ ...formData, download_url: e.target.value })} placeholder="https://example.com/app.apk" />
               <p className="text-xs text-muted-foreground">Direct link to APK / installer. Shown to users as an optional Download button.</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="openpay_link">OpenPay Payment Link (optional)</Label>
+              <Input id="openpay_link" type="url" value={formData.openpay_link} onChange={(e) => setFormData({ ...formData, openpay_link: e.target.value })} placeholder="https://openpay.app/yourname" />
+              <p className="text-xs text-muted-foreground">Your OpenPay link. If set, users see a "Pay with OpenPay" option and confirm with a transaction ID.</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="droppay_link">DropPay Payment Link (optional)</Label>
+              <Input id="droppay_link" type="url" value={formData.droppay_link} onChange={(e) => setFormData({ ...formData, droppay_link: e.target.value })} placeholder="https://droppay.app/yourname" />
+              <p className="text-xs text-muted-foreground">Your DropPay link. Same flow — users pay externally, then submit a transaction ID for you to approve.</p>
             </div>
           </div>
 
