@@ -1,7 +1,11 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Download, Copy, Smartphone } from 'lucide-react';
+import { Download, Copy, Smartphone, CheckCircle2, Gift } from 'lucide-react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useAffiliate } from '@/hooks/useAffiliate';
 
 interface OpenAppModalProps {
   open: boolean;
@@ -9,6 +13,10 @@ interface OpenAppModalProps {
 }
 
 export function OpenAppModal({ open, onOpenChange }: OpenAppModalProps) {
+  const { user } = useAuth();
+  const { profile, confirmApkInstalled } = useAffiliate();
+  const [confirming, setConfirming] = useState(false);
+
   const apkLink = 'https://median.co/share/nmdkwkr#apk';
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(apkLink)}`;
 
@@ -22,6 +30,16 @@ export function OpenAppModal({ open, onOpenChange }: OpenAppModalProps) {
       toast.success('Download link copied to clipboard!');
     } catch (error) {
       toast.error('Failed to copy link');
+    }
+  };
+
+  const handleConfirmInstalled = async () => {
+    setConfirming(true);
+    const err = await confirmApkInstalled();
+    setConfirming(false);
+    if (err) toast.error(err.message);
+    else {
+      toast.success(profile?.referred_by ? 'Confirmed! Your referrer earned $1.' : 'Install confirmed.');
     }
   };
 
