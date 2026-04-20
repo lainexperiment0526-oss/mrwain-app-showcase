@@ -122,7 +122,7 @@ export default function Auth() {
         .eq('id', piUser.uid);
 
       toast.success(`Welcome, ${piUser.username}!`);
-      navigate('/');
+      navigate(redirectTo, { replace: true });
     } else {
       toast.error('Pi authentication failed. Make sure you are in Pi Browser.');
     }
@@ -162,7 +162,7 @@ export default function Auth() {
         }
         
         toast.success('Welcome back!');
-        navigate('/');
+        navigate(redirectTo, { replace: true });
       }
     } catch (error) {
       toast.error('Authentication failed. Please try again.');
