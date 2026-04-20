@@ -316,17 +316,17 @@ export function VideoAdOverlay({ ad, onClose, onNavigate }: VideoAdOverlayProps)
 
             <div className="absolute bottom-0 left-0 right-0 border-t border-border bg-background/95 px-5 py-4 backdrop-blur">
               <div className="flex items-center gap-3">
-                <button onClick={() => setShowDetails(false)} className="flex-1 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground">
+                <button onClick={() => { setShowDetails(false); onClose(); }} className="flex-1 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground">
                   Close
                 </button>
                 <button
                   onClick={() => {
                     if (onNavigate) onNavigate(); else onClose();
-                    if (appId) navigate(buildDetailUrl(appId));
+                    openAdLink();
                   }}
                   className="flex-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
                 >
-                  View App
+                  Get
                 </button>
               </div>
             </div>
