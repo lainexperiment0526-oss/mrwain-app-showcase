@@ -231,14 +231,22 @@ export function PiProvider({ children }: { children: ReactNode }) {
   }, [piUser]);
 
   const showPiAd = useCallback(async (adType: 'interstitial' | 'rewarded'): Promise<boolean> => {
+    if (!isPiBrowser()) return false;
     if (!window.Pi?.Ads) {
       console.warn('Pi Ads not available');
       return false;
     }
     try {
-      await window.Pi.Ads.requestAd(adType);
-      await window.Pi.Ads.showAd(adType);
-      return true;
+      const readiness = await window.Pi.Ads.isAdReady(adType);
+      if (!readiness?.ready) {
+        const requested = await window.Pi.Ads.requestAd(adType);
+        if (requested?.result !== 'AD_LOADED') {
+          console.warn('Pi Ad not loaded:', requested?.result);
+          return false;
+        }
+      }
+      const shown = await window.Pi.Ads.showAd(adType);
+      return shown?.result === 'AD_REWARDED' || shown?.result === 'AD_CLOSED' || shown?.result === 'AD_DISPLAYED';
     } catch (err) {
       console.error('Pi Ad error:', err);
       return false;
