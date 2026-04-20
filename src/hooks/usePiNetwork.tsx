@@ -22,9 +22,9 @@ declare global {
         }
       ) => void;
       Ads: {
-        requestAd: (adType: string) => Promise<void>;
-        showAd: (adType: string) => Promise<void>;
-        isAdReady: (adType: string) => boolean;
+        showAd: (adType: 'interstitial' | 'rewarded') => Promise<{ result: string; adId?: string }>;
+        requestAd: (adType: 'interstitial' | 'rewarded') => Promise<{ result: string }>;
+        isAdReady: (adType: 'interstitial' | 'rewarded') => Promise<{ ready: boolean }>;
       };
     };
   }
