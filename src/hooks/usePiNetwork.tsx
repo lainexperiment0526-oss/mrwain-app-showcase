@@ -55,7 +55,14 @@ interface PiContextType {
 const PiContext = createContext<PiContextType | undefined>(undefined);
 
 const PI_SDK_URL = 'https://sdk.minepi.com/pi-sdk.js';
-const isPiBrowser = () => /pibrowser|pi browser/i.test(navigator.userAgent);
+const isPiBrowser = () => {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent || '';
+  // Pi Browser UA contains "PiBrowser" but also presence of window.Pi.Ads is a strong signal
+  if (/pibrowser|pi browser|minepi/i.test(ua)) return true;
+  if (typeof window !== 'undefined' && (window as any).Pi?.Ads) return true;
+  return false;
+};
 const initPi = () => {
   if (!window.Pi) return false;
   window.Pi.init({ version: '2.0' });
@@ -231,24 +238,35 @@ export function PiProvider({ children }: { children: ReactNode }) {
   }, [piUser]);
 
   const showPiAd = useCallback(async (adType: 'interstitial' | 'rewarded'): Promise<boolean> => {
-    if (!isPiBrowser()) return false;
     if (!window.Pi?.Ads) {
-      console.warn('Pi Ads not available');
+      console.warn('[Pi Ads] SDK not available — likely not in Pi Browser');
       return false;
     }
     try {
+      console.log(`[Pi Ads] Checking readiness for ${adType}...`);
       const readiness = await window.Pi.Ads.isAdReady(adType);
+      console.log('[Pi Ads] isAdReady:', readiness);
+
       if (!readiness?.ready) {
+        console.log(`[Pi Ads] Requesting ${adType} ad...`);
         const requested = await window.Pi.Ads.requestAd(adType);
+        console.log('[Pi Ads] requestAd result:', requested);
         if (requested?.result !== 'AD_LOADED') {
-          console.warn('Pi Ad not loaded:', requested?.result);
+          console.warn('[Pi Ads] Ad not loaded, result:', requested?.result);
           return false;
         }
       }
+
+      console.log(`[Pi Ads] Showing ${adType} ad...`);
       const shown = await window.Pi.Ads.showAd(adType);
-      return shown?.result === 'AD_REWARDED' || shown?.result === 'AD_CLOSED' || shown?.result === 'AD_DISPLAYED';
+      console.log('[Pi Ads] showAd result:', shown);
+      return (
+        shown?.result === 'AD_REWARDED' ||
+        shown?.result === 'AD_CLOSED' ||
+        shown?.result === 'AD_DISPLAYED'
+      );
     } catch (err) {
-      console.error('Pi Ad error:', err);
+      console.error('[Pi Ads] Error:', err);
       return false;
     }
   }, []);
