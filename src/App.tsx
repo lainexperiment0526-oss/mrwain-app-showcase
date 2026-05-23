@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { PiProvider } from "@/hooks/usePiNetwork";
+import { PiAuthProvider } from "@/contexts/PiAuthContext";
 import { SplashScreen } from "@/components/SplashScreen";
 import { Footer } from "@/components/Footer";
 import { OpenAppModal } from "@/components/OpenAppModal";
@@ -37,6 +38,8 @@ import AppPurchases from "./pages/AppPurchases";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
 import AdminBlog from "./pages/AdminBlog";
+import TestnetRewardPage from "./pages/TestnetRewardPage";
+import TestnetProgressPage from "./pages/admin/TestnetProgressPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -75,6 +78,9 @@ function AppContent() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/license" element={<License />} />
+          <Route path="/testnet-reward" element={<TestnetRewardPage />} />
+          <Route path="/admin/testnet-progress" element={<RequireAuth><TestnetProgressPage /></RequireAuth>} />
+
 
           {/* Protected routes — sign-in required */}
           <Route path="/" element={<RequireAuth><Index /></RequireAuth>} />
@@ -117,11 +123,13 @@ const App = () => {
       <ThemeProvider>
         <AuthProvider>
           <PiProvider>
-            <TooltipProvider>
-              <OpenAppModalProvider>
-                <AppContent />
-              </OpenAppModalProvider>
-            </TooltipProvider>
+            <PiAuthProvider>
+              <TooltipProvider>
+                <OpenAppModalProvider>
+                  <AppContent />
+                </OpenAppModalProvider>
+              </TooltipProvider>
+            </PiAuthProvider>
           </PiProvider>
         </AuthProvider>
       </ThemeProvider>
