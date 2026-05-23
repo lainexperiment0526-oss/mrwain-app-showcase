@@ -2,17 +2,7 @@ const PI_AUTH_STORAGE_KEY = "openapp_pi_auth";
 
 export type PiAuthSession = { uid: string; username: string; accessToken: string };
 
-declare global {
-  interface Window {
-    Pi?: {
-      init: (config: { version: string; sandbox?: boolean }) => void;
-      authenticate: (scopes: string[], onIncompletePaymentFound?: (p: any) => void) => Promise<{
-        user: { uid: string; username: string };
-        accessToken: string;
-      }>;
-    };
-  }
-}
+// Window.Pi global type is declared in src/hooks/usePiNetwork.tsx
 
 export function isPiSandbox(): boolean {
   const env = String(import.meta.env.VITE_PI_SANDBOX ?? "").trim().toLowerCase();
