@@ -279,6 +279,20 @@ export default function DeveloperDashboard() {
           </div>
         </div>
 
+        <Link to="/testnet-reward" className="block mb-8">
+          <div className="rounded-2xl bg-gradient-to-r from-[#7B2FF2]/20 to-[#9B59B6]/20 p-5 border border-[#7B2FF2]/30 hover:border-[#7B2FF2]/60 transition-colors">
+            <div className="flex items-center gap-4">
+              <div className="rounded-xl bg-[#7B2FF2]/10 p-3">
+                <Coins className="h-6 w-6 text-[#7B2FF2]" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Claim Test Pi Reward</h3>
+                <p className="text-sm text-muted-foreground">Help qualify for Mainnet wallet approval</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+
         <p className="text-xs text-muted-foreground mb-6">Revenue split: 70% Developer / 30% Platform Fee</p>
 
         <div className="rounded-2xl bg-card p-6 border border-border mb-8">
