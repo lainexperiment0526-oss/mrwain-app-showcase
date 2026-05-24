@@ -37,6 +37,7 @@ import {
   BookOpen,
   Download,
   Gift,
+  Coins,
 } from 'lucide-react';
 
 interface MenuItemProps {
@@ -110,6 +111,7 @@ export function MenuDrawer() {
             <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">Developer</p>
             <MenuItem icon={<Code2 className="h-5 w-5" />} label="Developer Dashboard" href="/developer-dashboard" />
             {user && <MenuItem icon={<AppWindow className="h-5 w-5" />} label="My Apps" href="/my-apps" />}
+            <MenuItem icon={<Coins className="h-5 w-5" />} label="Testnet Reward" href="/testnet-reward" />
           </div>
 
           <div className="border-t border-border mt-2 pt-3 space-y-1">
