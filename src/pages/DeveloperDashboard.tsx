@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { ArrowLeft, Wallet, TrendingUp, DollarSign } from 'lucide-react';
+import { ArrowLeft, Wallet, TrendingUp, DollarSign, Coins } from 'lucide-react';
 import { PageLoader } from '@/components/PageLoader';
 
 interface EarningsSummary {
