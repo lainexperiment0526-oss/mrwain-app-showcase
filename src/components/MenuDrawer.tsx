@@ -37,6 +37,7 @@ import {
   BookOpen,
   Download,
   Gift,
+  Coins,
 } from 'lucide-react';
 
 interface MenuItemProps {
