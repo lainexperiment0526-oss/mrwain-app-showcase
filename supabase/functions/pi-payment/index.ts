@@ -13,9 +13,9 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  const piApiKey = Deno.env.get("PI_API_KEY");
+  const piApiKey = Deno.env.get("PI_NETWORK_API_KEY") || Deno.env.get("PI_API_KEY");
   if (!piApiKey) {
-    return new Response(JSON.stringify({ error: "PI_API_KEY not configured" }), {
+    return new Response(JSON.stringify({ error: "PI_NETWORK_API_KEY not configured" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -25,9 +25,31 @@ Deno.serve(async (req) => {
   const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+  // Product catalog — keep frontend + backend consistent
+  const PRODUCTS = {
+    app_listing: { amount: 25, memo: "App listing fee - OpenApp" },
+  } as const;
+
   try {
     const body = await req.json();
     const { action, paymentId, txid, userId, amount, memo, metadata } = body;
+
+    // Server-side product validation for known product types
+    if ((action === "approve" || action === "complete") && metadata?.type && PRODUCTS[metadata.type as keyof typeof PRODUCTS]) {
+      const expected = PRODUCTS[metadata.type as keyof typeof PRODUCTS];
+      if (Number(amount) !== expected.amount || String(memo) !== expected.memo) {
+        return new Response(
+          JSON.stringify({ error: `Invalid ${metadata.type} payment: amount/memo mismatch`, expected }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+      if (metadata.type === "app_listing" && !metadata.draft_id) {
+        return new Response(
+          JSON.stringify({ error: "Missing draft_id for app_listing payment" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+    }
 
     if (action === "approve") {
       // Approve a payment on Pi server

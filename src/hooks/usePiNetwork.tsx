@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 declare global {
   interface Window {
     Pi: {
-      init: (config: { version: string; sandbox?: boolean }) => void;
+      init: (config: { version: string; sandbox?: boolean }) => void | Promise<void>;
       authenticate: (
         scopes: string[],
         onIncompletePaymentFound: (payment: any) => void
@@ -63,10 +63,24 @@ const isPiBrowser = () => {
   if (typeof window !== 'undefined' && (window as any).Pi?.Ads) return true;
   return false;
 };
-const initPi = () => {
-  if (!window.Pi) return false;
-  window.Pi.init({ version: '2.0' });
-  return true;
+let piInitPromise: Promise<boolean> | null = null;
+const initPi = (): Promise<boolean> => {
+  if (!window.Pi) return Promise.resolve(false);
+  if (piInitPromise) return piInitPromise;
+  piInitPromise = (async () => {
+    try {
+      const res = window.Pi.init({ version: '2.0' }) as unknown;
+      if (res && typeof (res as Promise<unknown>).then === 'function') {
+        await (res as Promise<unknown>);
+      }
+      return true;
+    } catch (e) {
+      console.warn('Pi.init failed', e);
+      piInitPromise = null;
+      return false;
+    }
+  })();
+  return piInitPromise;
 };
 
 export function PiProvider({ children }: { children: ReactNode }) {
@@ -75,53 +89,48 @@ export function PiProvider({ children }: { children: ReactNode }) {
   const [piLoading, setPiLoading] = useState(true);
 
   useEffect(() => {
-    // Check if already loaded
-    if (initPi()) {
-      setIsPiReady(true);
-      setPiLoading(false);
-      return;
-    }
+    let cancelled = false;
+    const tryInit = async () => {
+      const ok = await initPi();
+      if (cancelled) return ok;
+      if (ok) { setIsPiReady(true); setPiLoading(false); }
+      return ok;
+    };
 
-    // Skip Pi SDK loading on localhost if not in Pi Browser to avoid cross-origin errors
-    if (!isPiBrowser() && window.location.hostname === 'localhost') {
-      console.log('Pi SDK loading skipped on localhost (not in Pi Browser)');
-      setPiLoading(false);
-      return;
-    }
+    (async () => {
+      if (await tryInit()) return;
 
-    const script = document.createElement('script');
-    script.src = PI_SDK_URL;
-    script.async = true;
-    script.onload = () => {
-      // Pi object can be attached slightly after script onload on some WebViews.
-      if (initPi()) {
-        setIsPiReady(true);
-        setPiLoading(false);
+      if (!isPiBrowser() && window.location.hostname === 'localhost') {
+        console.log('Pi SDK loading skipped on localhost (not in Pi Browser)');
+        if (!cancelled) setPiLoading(false);
         return;
       }
 
-      let retries = 0;
-      const maxRetries = 10;
-      const retryInterval = window.setInterval(() => {
-        retries += 1;
-        if (initPi()) {
-          window.clearInterval(retryInterval);
-          setIsPiReady(true);
-          setPiLoading(false);
-          return;
-        }
-        if (retries >= maxRetries) {
-          window.clearInterval(retryInterval);
-          console.warn('Pi SDK loaded but Pi object is unavailable');
-          setPiLoading(false);
-        }
-      }, 200);
-    };
-    script.onerror = () => {
-      console.warn('Pi SDK not available (not in Pi Browser)');
-      setPiLoading(false);
-    };
-    document.head.appendChild(script);
+      const script = document.createElement('script');
+      script.src = PI_SDK_URL;
+      script.async = true;
+      script.onload = async () => {
+        if (await tryInit()) return;
+        let retries = 0;
+        const maxRetries = 10;
+        const retryInterval = window.setInterval(async () => {
+          retries += 1;
+          if (await tryInit()) { window.clearInterval(retryInterval); return; }
+          if (retries >= maxRetries) {
+            window.clearInterval(retryInterval);
+            console.warn('Pi SDK loaded but Pi object is unavailable');
+            if (!cancelled) setPiLoading(false);
+          }
+        }, 200);
+      };
+      script.onerror = () => {
+        console.warn('Pi SDK not available (not in Pi Browser)');
+        if (!cancelled) setPiLoading(false);
+      };
+      document.head.appendChild(script);
+    })();
+
+    return () => { cancelled = true; };
   }, []);
 
   const onIncompletePaymentFound = useCallback(async (payment: any) => {
@@ -140,14 +149,15 @@ export function PiProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const authenticateWithPi = useCallback(async (): Promise<PiUser | null> => {
-    if (!window.Pi) {
+    const ready = await initPi();
+    if (!ready || !window.Pi) {
       console.warn('Pi SDK not available');
       return null;
     }
     try {
       setPiLoading(true);
       const auth = await window.Pi.authenticate(
-        ['payments', 'username'],
+        ['username', 'payments'],
         onIncompletePaymentFound
       );
       const user: PiUser = {
@@ -176,7 +186,9 @@ export function PiProvider({ children }: { children: ReactNode }) {
       onPaymentError?: (error: any) => void;
     }
   ): Promise<void> => {
-    if (!window.Pi) throw new Error('Pi SDK not available');
+    const ready = await initPi();
+    if (!ready || !window.Pi) throw new Error('Pi SDK not available');
+
 
     const baseUrl = import.meta.env.VITE_SUPABASE_URL;
     const { data: authData } = await supabase.auth.getUser();
