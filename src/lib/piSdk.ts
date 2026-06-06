@@ -18,10 +18,25 @@ export function isPiBrowser(): boolean {
   return /PiBrowser/i.test(navigator.userAgent) || Boolean(window.Pi);
 }
 
-export function initPiSdk(): boolean {
-  if (!window.Pi) return false;
-  try { window.Pi.init({ version: "2.0", sandbox: isPiSandbox() }); return true; }
-  catch (e) { console.warn("Pi SDK init failed", e); return false; }
+let initPromise: Promise<boolean> | null = null;
+export function initPiSdk(): Promise<boolean> {
+  if (!window.Pi) return Promise.resolve(false);
+  if (initPromise) return initPromise;
+  initPromise = (async () => {
+    try {
+      const res = window.Pi.init({ version: "2.0", sandbox: isPiSandbox() });
+      // Pi.init may return a Promise — await if thenable
+      if (res && typeof (res as Promise<unknown>).then === "function") {
+        await res;
+      }
+      return true;
+    } catch (e) {
+      console.warn("Pi SDK init failed", e);
+      initPromise = null;
+      return false;
+    }
+  })();
+  return initPromise;
 }
 
 export function loadPiAuthSession(): PiAuthSession | null {
