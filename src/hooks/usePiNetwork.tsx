@@ -149,14 +149,15 @@ export function PiProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const authenticateWithPi = useCallback(async (): Promise<PiUser | null> => {
-    if (!window.Pi) {
+    const ready = await initPi();
+    if (!ready || !window.Pi) {
       console.warn('Pi SDK not available');
       return null;
     }
     try {
       setPiLoading(true);
       const auth = await window.Pi.authenticate(
-        ['payments', 'username'],
+        ['username', 'payments'],
         onIncompletePaymentFound
       );
       const user: PiUser = {
