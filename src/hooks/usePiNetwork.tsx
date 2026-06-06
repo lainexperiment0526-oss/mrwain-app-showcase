@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 declare global {
   interface Window {
     Pi: {
-      init: (config: { version: string; sandbox?: boolean }) => void;
+      init: (config: { version: string; sandbox?: boolean }) => void | Promise<void>;
       authenticate: (
         scopes: string[],
         onIncompletePaymentFound: (payment: any) => void
