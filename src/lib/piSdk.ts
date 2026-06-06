@@ -63,9 +63,9 @@ export async function waitForPiSdk(timeoutMs = 12000): Promise<boolean> {
   });
 }
 
-export async function authenticatePi(scopes: string[] = ["username", "payments", "wallet_address"]): Promise<PiAuthSession> {
+export async function authenticatePi(scopes: string[] = ["username"]): Promise<PiAuthSession> {
   if (!window.Pi) throw new Error("Pi SDK unavailable. Open this app in Pi Browser.");
-  initPiSdk();
+  await initPiSdk();
   const auth = await window.Pi.authenticate(scopes, () => {});
   const session: PiAuthSession = { uid: auth.user.uid, username: auth.user.username || "", accessToken: auth.accessToken };
   savePiAuthSession(session);
