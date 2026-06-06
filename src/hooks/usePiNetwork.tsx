@@ -186,7 +186,9 @@ export function PiProvider({ children }: { children: ReactNode }) {
       onPaymentError?: (error: any) => void;
     }
   ): Promise<void> => {
-    if (!window.Pi) throw new Error('Pi SDK not available');
+    const ready = await initPi();
+    if (!ready || !window.Pi) throw new Error('Pi SDK not available');
+
 
     const baseUrl = import.meta.env.VITE_SUPABASE_URL;
     const { data: authData } = await supabase.auth.getUser();
