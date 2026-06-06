@@ -4,6 +4,7 @@ import { MenuDrawer } from '@/components/MenuDrawer';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useOpenAppModal } from '@/contexts/OpenAppModalContext';
+import { PiSignInButton } from '@/components/pi/PiSignInButton';
 
 export function Header() {
   const { setShowOpenAppModal } = useOpenAppModal();
