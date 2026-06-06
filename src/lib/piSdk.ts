@@ -24,10 +24,10 @@ export function initPiSdk(): Promise<boolean> {
   if (initPromise) return initPromise;
   initPromise = (async () => {
     try {
-      const res = window.Pi.init({ version: "2.0", sandbox: isPiSandbox() });
+      const res = window.Pi.init({ version: "2.0", sandbox: isPiSandbox() }) as unknown;
       // Pi.init may return a Promise — await if thenable
       if (res && typeof (res as Promise<unknown>).then === "function") {
-        await res;
+        await (res as Promise<unknown>);
       }
       return true;
     } catch (e) {
