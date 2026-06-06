@@ -18,10 +18,25 @@ export function isPiBrowser(): boolean {
   return /PiBrowser/i.test(navigator.userAgent) || Boolean(window.Pi);
 }
 
-export function initPiSdk(): boolean {
-  if (!window.Pi) return false;
-  try { window.Pi.init({ version: "2.0", sandbox: isPiSandbox() }); return true; }
-  catch (e) { console.warn("Pi SDK init failed", e); return false; }
+let initPromise: Promise<boolean> | null = null;
+export function initPiSdk(): Promise<boolean> {
+  if (!window.Pi) return Promise.resolve(false);
+  if (initPromise) return initPromise;
+  initPromise = (async () => {
+    try {
+      const res = window.Pi.init({ version: "2.0", sandbox: isPiSandbox() }) as unknown;
+      // Pi.init may return a Promise — await if thenable
+      if (res && typeof (res as Promise<unknown>).then === "function") {
+        await (res as Promise<unknown>);
+      }
+      return true;
+    } catch (e) {
+      console.warn("Pi SDK init failed", e);
+      initPromise = null;
+      return false;
+    }
+  })();
+  return initPromise;
 }
 
 export function loadPiAuthSession(): PiAuthSession | null {
@@ -48,9 +63,9 @@ export async function waitForPiSdk(timeoutMs = 12000): Promise<boolean> {
   });
 }
 
-export async function authenticatePi(scopes: string[] = ["username", "payments", "wallet_address"]): Promise<PiAuthSession> {
+export async function authenticatePi(scopes: string[] = ["username"]): Promise<PiAuthSession> {
   if (!window.Pi) throw new Error("Pi SDK unavailable. Open this app in Pi Browser.");
-  initPiSdk();
+  await initPiSdk();
   const auth = await window.Pi.authenticate(scopes, () => {});
   const session: PiAuthSession = { uid: auth.user.uid, username: auth.user.username || "", accessToken: auth.accessToken };
   savePiAuthSession(session);

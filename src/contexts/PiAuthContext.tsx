@@ -41,30 +41,32 @@ export function PiAuthProvider({ children }: { children: ReactNode }) {
     (async () => {
       const ready = await waitForPiSdk();
       if (cancelled) return;
-      setSdkReady(ready); if (ready) initPiSdk();
+      if (ready) await initPiSdk();
+      setSdkReady(ready);
       const stored = loadPiAuthSession();
-      if (stored && inPiBrowser && ready) { try { await refreshSession(); } catch { /* */ } }
+      if (stored && ready) { try { await refreshSession(); } catch { /* */ } }
       else if (stored) setSession(stored);
       if (!cancelled) setLoading(false);
     })();
     return () => { cancelled = true; };
-  }, [inPiBrowser, refreshSession]);
+  }, [refreshSession]);
 
   const signIn = useCallback(async () => {
     setAuthError(null); setLoading(true);
     try {
-      const auth = await authenticatePi(["username", "payments", "wallet_address"]);
+      const auth = await authenticatePi(["username"]);
       const verified = await verifyPiAuth(auth.accessToken);
       const next: PiAuthSession = { uid: verified.data.uid, username: verified.data.username || auth.username, accessToken: auth.accessToken };
       savePiAuthSession(next); setSession(next); return next;
     } finally { setLoading(false); }
   }, []);
 
+  // Auto-trigger Pi authentication on app load whenever SDK is available
   useEffect(() => {
-    if (loading || session || !inPiBrowser || !sdkReady || autoLoginAttempted.current) return;
+    if (loading || session || !sdkReady || autoLoginAttempted.current) return;
     autoLoginAttempted.current = true;
     void signIn().catch((e) => setAuthError(e instanceof Error ? e.message : "Auto login failed"));
-  }, [loading, session, inPiBrowser, sdkReady, signIn]);
+  }, [loading, session, sdkReady, signIn]);
 
   const signOut = useCallback(() => {
     clearPiAuthSession(); setSession(null); setAuthError(null);
