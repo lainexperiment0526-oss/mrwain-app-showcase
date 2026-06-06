@@ -22,6 +22,7 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-2">
+          <PiSignInButton />
           <Button 
             variant="outline" 
             size="sm" 
