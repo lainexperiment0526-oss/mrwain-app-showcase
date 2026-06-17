@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "返回",
+    "search": "搜索",
+    "searchApps": "搜索应用...",
+    "all": "全部",
+    "clear": "清除",
+    "loading": "加载中...",
+    "signIn": "登录",
+    "signOut": "退出登录",
+    "cancel": "取消",
+    "save": "保存",
+    "saving": "保存中...",
+    "saved": "已保存",
+    "submit": "提交",
+    "processing": "处理中...",
+    "comingSoon": "即将推出",
+    "getStarted": "开始使用",
+    "open": "打开"
+  },
+  "nav": {
+    "home": "首页",
+    "browseApps": "浏览应用",
+    "newApps": "新应用",
+    "topApps": "热门应用",
+    "submitApp": "提交应用",
+    "favorites": "收藏",
+    "feedback": "反馈",
+    "blog": "博客",
+    "purchases": "购买记录",
+    "profile": "个人资料",
+    "downloadApp": "下载应用",
+    "download": "下载",
+    "inviteEarn": "邀请赚取",
+    "developer": "开发者",
+    "developerDashboard": "开发者面板",
+    "myApps": "我的应用",
+    "testnetReward": "测试网奖励",
+    "adNetwork": "广告网络",
+    "advertiserDashboard": "广告主面板",
+    "analytics": "数据分析",
+    "admin": "管理员",
+    "appModeration": "应用审核",
+    "adModeration": "广告审核",
+    "blogManager": "博客管理",
+    "legal": "法律",
+    "about": "关于 OpenApp",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "license": "许可证",
+    "lightMode": "浅色模式",
+    "darkMode": "深色模式"
+  },
+  "bottomNav": {
+    "home": "首页",
+    "ads": "广告",
+    "apps": "应用",
+    "analytics": "分析",
+    "search": "搜索"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp 由 Mrwain Organization 提供",
+    "about": "关于",
+    "blog": "博客",
+    "legal": "法律",
+    "privacy": "隐私",
+    "license": "许可证"
+  },
+  "home": {
+    "searchResults": "搜索结果",
+    "noAppsFound": "未找到应用",
+    "topApps": "热门应用",
+    "newArrivals": "最新上架",
+    "noAppsYet": "暂无应用"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "登录以继续",
+    "description": "在一个地方发现可信赖的应用、追踪您的收藏并管理您的提交。",
+    "piNetwork": "Pi Network",
+    "email": "邮箱",
+    "signInWithPi": "使用 Pi Network 登录",
+    "connecting": "连接中...",
+    "piBrowserRequired": "Pi 登录需要 Pi Browser",
+    "benefit1": "使用 Pi Network 安全登录，无需邮箱或密码。",
+    "benefit2": "在所有设备上访问您的应用列表、广告和分析。",
+    "benefit3": "初次使用？安装 Pi Browser 即可开始。",
+    "note": "注意：如果您打算使用 OpenApp 移动应用，请使用邮箱认证。",
+    "welcomeBack": "欢迎回来！"
+  },
+  "wallet": {
+    "availableBalance": "可用余额",
+    "withdrawEarnings": "提取收益",
+    "amount": "金额 (Pi)",
+    "withdraw": "提取",
+    "withdrawalHistory": "提现记录",
+    "noWithdrawals": "暂无提现记录。",
+    "insufficientBalance": "余额不足"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "语言",
+    "select": "选择语言"
+  },
+  "profile": {
+    "language": "语言",
+    "languageHint": "选择您偏好的界面语言。",
+    "languageUpdated": "语言已更新"
+  }
+}

@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Logo } from '@/components/Logo';
 import { MenuDrawer } from '@/components/MenuDrawer';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useOpenAppModal } from '@/contexts/OpenAppModalContext';
 import { PiSignInButton } from '@/components/pi/PiSignInButton';
 
 export function Header() {
+  const { t } = useTranslation();
   const { setShowOpenAppModal } = useOpenAppModal();
 
   const handleOpenAppModal = () => {
@@ -18,11 +21,12 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
           <Logo size="sm" />
-          <span className="text-xl font-bold text-foreground">OpenApp</span>
+          <span className="text-xl font-bold text-foreground">{t('common.appName')}</span>
         </Link>
 
         <nav className="flex items-center gap-2">
           <PiSignInButton />
+          <LanguageSelector />
           <Button 
             variant="outline" 
             size="sm" 
@@ -30,8 +34,8 @@ export function Header() {
             className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Download App</span>
-            <span className="sm:hidden">Download</span>
+            <span className="hidden sm:inline">{t('nav.downloadApp')}</span>
+            <span className="sm:hidden">{t('nav.download')}</span>
           </Button>
           <MenuDrawer />
         </nav>

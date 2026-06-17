@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { AppCard, SectionHeader } from '@/components/AppCard';
@@ -10,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/Logo';
 
 export default function Index() {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFilter = searchParams.get('category');
   const queryParam = searchParams.get('q') ?? '';
@@ -109,7 +111,7 @@ export default function Index() {
                   : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
               }`}
             >
-              All
+              {t('common.all')}
             </Link>
             {categories.map(category => (
               <CategoryPill 
@@ -130,15 +132,15 @@ export default function Index() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold text-foreground">
-                {currentCategory ? currentCategory.name : 'Search Results'}
+                {currentCategory ? currentCategory.name : t('home.searchResults')}
               </h1>
               {categoryFilter && (
-                <Link to="/" className="text-primary text-sm font-medium">Clear</Link>
+                <Link to="/" className="text-primary text-sm font-medium">{t('common.clear')}</Link>
               )}
             </div>
             {filteredApps.length === 0 ? (
               <div className="py-12 text-center">
-                <p className="text-lg text-muted-foreground">No apps found</p>
+                <p className="text-lg text-muted-foreground">{t('home.noAppsFound')}</p>
               </div>
             ) : (
               <div className="divide-y divide-border">
@@ -169,7 +171,7 @@ export default function Index() {
             {/* Popular Apps ranked by rating */}
             {popularApps && popularApps.length > 0 && (
               <section className="mb-8">
-                <SectionHeader title="Top Apps" href="/top" />
+                <SectionHeader title={t('home.topApps')} href="/top" />
                 <div className="divide-y divide-border">
                   {[...popularApps].sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0)).slice(0, 4).map(app => (
                     <AppCard key={app.id} app={app} variant="list" />
@@ -181,7 +183,7 @@ export default function Index() {
             {/* New Apps */}
             {newApps && newApps.length > 0 && (
               <section className="mb-8">
-                <SectionHeader title="New Arrivals" href="/new" />
+                <SectionHeader title={t('home.newArrivals')} href="/new" />
                 <div className="divide-y divide-border">
                   {newApps.slice(0, 4).map(app => (
                     <AppCard key={app.id} app={app} variant="list" />
@@ -224,7 +226,7 @@ export default function Index() {
                 <div className="mx-auto mb-4 flex justify-center">
                   <Logo size="lg" />
                 </div>
-                <h2 className="text-xl font-bold text-foreground">No apps yet</h2>
+                <h2 className="text-xl font-bold text-foreground">{t('home.noAppsYet')}</h2>
               </div>
             )}
           </>

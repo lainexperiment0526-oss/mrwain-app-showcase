@@ -75,7 +75,7 @@ export default function Affiliate() {
     const err = await confirmApkInstalled();
     setConfirming(false);
     if (err) toast.error(err.message);
-    else toast.success('Thanks! Your referrer just earned $1.');
+    else toast.success('Thanks! Your referrer just earned 1 π.');
   };
 
   return (
@@ -101,7 +101,7 @@ export default function Affiliate() {
             <CardContent className="pt-6 text-center">
               <DollarSign className="h-6 w-6 text-primary mx-auto mb-2" />
               <p className="text-xs text-muted-foreground">Total Earned</p>
-              <p className="text-2xl font-bold text-foreground">${totalEarnedUsd.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{totalEarnedUsd.toFixed(2)} π</p>
             </CardContent>
           </Card>
           <Card>
@@ -109,7 +109,7 @@ export default function Affiliate() {
               <Smartphone className="h-6 w-6 text-primary mx-auto mb-2" />
               <p className="text-xs text-muted-foreground">APK Installs</p>
               <p className="text-2xl font-bold text-foreground">{apkRewards.length}</p>
-              <p className="text-xs text-muted-foreground mt-1">$1 each</p>
+              <p className="text-xs text-muted-foreground mt-1">1 π each</p>
             </CardContent>
           </Card>
           <Card>
@@ -117,7 +117,7 @@ export default function Affiliate() {
               <Rocket className="h-6 w-6 text-primary mx-auto mb-2" />
               <p className="text-xs text-muted-foreground">Apps Listed</p>
               <p className="text-2xl font-bold text-foreground">{listingRewards.length}</p>
-              <p className="text-xs text-muted-foreground mt-1">$3 each</p>
+              <p className="text-xs text-muted-foreground mt-1">3 π each</p>
             </CardContent>
           </Card>
         </div>
@@ -132,14 +132,14 @@ export default function Affiliate() {
             <div className="flex gap-3">
               <Smartphone className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-foreground">$1 per APK install</p>
+                <p className="font-medium text-foreground">1 π per APK install</p>
                 <p className="text-muted-foreground">When someone signs up via your link and confirms they installed the OpenApp Android APK.</p>
               </div>
             </div>
             <div className="flex gap-3">
               <Rocket className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-foreground">$3 per app listed</p>
+                <p className="font-medium text-foreground">3 π per app listed</p>
                 <p className="text-muted-foreground">When someone you invited submits an app and it gets approved on OpenApp.</p>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function Affiliate() {
           <Card className="border-primary/40 bg-primary/5">
             <CardHeader>
               <CardTitle className="text-base">Did you install the OpenApp APK?</CardTitle>
-              <CardDescription>Confirm to give your referrer their $1 credit.</CardDescription>
+              <CardDescription>Confirm to give your referrer their 1 π credit.</CardDescription>
             </CardHeader>
             <CardContent>
               <Button onClick={handleConfirmApk} loading={confirming}>
@@ -219,7 +219,7 @@ export default function Affiliate() {
                       </div>
                     </div>
                     <Badge variant="secondary" className="font-semibold">
-                      +${Number(r.amount_usd).toFixed(2)}
+                      +{Number(r.amount_usd).toFixed(2)} π
                     </Badge>
                   </div>
                 ))}

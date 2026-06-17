@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
 import { usePiNetwork } from '@/hooks/usePiNetwork';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Mail, Pi } from 'lucide-react';
 
 export default function Auth() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectTo = (location.state as { from?: string } | null)?.from || '/';
@@ -180,10 +182,10 @@ export default function Auth() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Logo size="lg" className="mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-foreground">OpenApp</h1>
-            <p className="mt-2 text-muted-foreground">Sign in to continue</p>
+            <h1 className="text-2xl font-bold text-foreground">{t('auth.title')}</h1>
+            <p className="mt-2 text-muted-foreground">{t('auth.subtitle')}</p>
             <p className="mt-3 text-sm text-muted-foreground">
-              Discover trusted apps, track your favorites, and manage your submissions in one place.
+              {t('auth.description')}
             </p>
           </div>
 
@@ -191,11 +193,11 @@ export default function Auth() {
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="pi" className="flex items-center gap-2">
                 <Pi className="h-4 w-4" />
-                Pi Network
+                {t('auth.piNetwork')}
               </TabsTrigger>
               <TabsTrigger value="email" className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                Email
+                {t('auth.email')}
               </TabsTrigger>
             </TabsList>
 
@@ -207,27 +209,27 @@ export default function Auth() {
                   className="w-full mb-4 bg-[#0A84FF] hover:bg-[#0074E8] dark:bg-[#0A84FF] dark:hover:bg-[#0074E8] text-white font-semibold"
                   size="lg"
                 >
-                  {piLoading ? 'Connecting...' : 'Sign in with Pi Network'}
+                  {piLoading ? t('auth.connecting') : t('auth.signInWithPi')}
                 </Button>
 
                 {!isPiReady && (
                   <p className="text-xs text-muted-foreground text-center mb-4">
-                    Pi sign-in requires Pi Browser
+                    {t('auth.piBrowserRequired')}
                   </p>
                 )}
 
                 <div className="mt-4 grid gap-3 text-sm text-muted-foreground">
                   <div className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                    <p>Secure sign-in with Pi Network. No email or password required.</p>
+                    <p>{t('auth.benefit1')}</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                    <p>Access your app listings, ads, and analytics across devices.</p>
+                    <p>{t('auth.benefit2')}</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                    <p>New here? Install Pi Browser to get started.</p>
+                    <p>{t('auth.benefit3')}</p>
                   </div>
                 </div>
               </div>
@@ -243,16 +245,16 @@ export default function Auth() {
 
           <div className="mt-6 text-center">
             <p className="text-xs text-muted-foreground mb-2">
-              <strong>Note:</strong> Use email authentication if you plan to use the OpenApp mobile application.
+              {t('auth.note')}
             </p>
           </div>
 
           <div className="mt-4 text-center text-xs text-muted-foreground space-x-3">
-            <a href="/privacy" className="hover:text-foreground">Privacy</a>
+            <a href="/privacy" className="hover:text-foreground">{t('footer.privacy')}</a>
             <span>&middot;</span>
-            <a href="/terms" className="hover:text-foreground">Terms</a>
+            <a href="/terms" className="hover:text-foreground">{t('footer.legal')}</a>
             <span>&middot;</span>
-            <a href="/license" className="hover:text-foreground">License</a>
+            <a href="/license" className="hover:text-foreground">{t('footer.license')}</a>
           </div>
         </div>
       </div>

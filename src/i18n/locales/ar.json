@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "رجوع",
+    "search": "بحث",
+    "searchApps": "ابحث عن التطبيقات...",
+    "all": "الكل",
+    "clear": "مسح",
+    "loading": "جارٍ التحميل...",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "saved": "تم الحفظ",
+    "submit": "إرسال",
+    "processing": "جارٍ المعالجة...",
+    "comingSoon": "قريبًا",
+    "getStarted": "ابدأ الآن",
+    "open": "فتح"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "browseApps": "تصفح التطبيقات",
+    "newApps": "تطبيقات جديدة",
+    "topApps": "أفضل التطبيقات",
+    "submitApp": "إرسال تطبيق",
+    "favorites": "المفضلة",
+    "feedback": "ملاحظات",
+    "blog": "المدونة",
+    "purchases": "المشتريات",
+    "profile": "الملف الشخصي",
+    "downloadApp": "تنزيل التطبيق",
+    "download": "تنزيل",
+    "inviteEarn": "ادعُ واربح",
+    "developer": "المطور",
+    "developerDashboard": "لوحة تحكم المطور",
+    "myApps": "تطبيقاتي",
+    "testnetReward": "مكافأة Testnet",
+    "adNetwork": "شبكة الإعلانات",
+    "advertiserDashboard": "لوحة تحكم المعلن",
+    "analytics": "التحليلات",
+    "admin": "الإدارة",
+    "appModeration": "مراجعة التطبيقات",
+    "adModeration": "مراجعة الإعلانات",
+    "blogManager": "إدارة المدونة",
+    "legal": "قانوني",
+    "about": "حول OpenApp",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "license": "الترخيص",
+    "lightMode": "الوضع الفاتح",
+    "darkMode": "الوضع الداكن"
+  },
+  "bottomNav": {
+    "home": "الرئيسية",
+    "ads": "إعلانات",
+    "apps": "تطبيقات",
+    "analytics": "تحليلات",
+    "search": "بحث"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp من Mrwain Organization",
+    "about": "حول",
+    "blog": "المدونة",
+    "legal": "قانوني",
+    "privacy": "الخصوصية",
+    "license": "الترخيص"
+  },
+  "home": {
+    "searchResults": "نتائج البحث",
+    "noAppsFound": "لم يتم العثور على تطبيقات",
+    "topApps": "أفضل التطبيقات",
+    "newArrivals": "وصل حديثًا",
+    "noAppsYet": "لا توجد تطبيقات بعد"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "سجّل الدخول للمتابعة",
+    "description": "اكتشف التطبيقات الموثوقة، وتابع مفضلاتك، وأدر طلباتك في مكان واحد.",
+    "piNetwork": "Pi Network",
+    "email": "البريد الإلكتروني",
+    "signInWithPi": "تسجيل الدخول عبر Pi Network",
+    "connecting": "جارٍ الاتصال...",
+    "piBrowserRequired": "يتطلب تسجيل الدخول عبر Pi متصفح Pi Browser",
+    "benefit1": "تسجيل دخول آمن عبر Pi Network. بدون بريد إلكتروني أو كلمة مرور.",
+    "benefit2": "الوصول إلى قوائم تطبيقاتك وإعلاناتك وتحليلاتك عبر جميع الأجهزة.",
+    "benefit3": "جديد هنا؟ ثبّت Pi Browser للبدء.",
+    "note": "ملاحظة: استخدم المصادقة عبر البريد الإلكتروني إذا كنت تخطط لاستخدام تطبيق OpenApp للهاتف.",
+    "welcomeBack": "مرحبًا بعودتك!"
+  },
+  "wallet": {
+    "availableBalance": "الرصيد المتاح",
+    "withdrawEarnings": "سحب الأرباح",
+    "amount": "المبلغ (Pi)",
+    "withdraw": "سحب",
+    "withdrawalHistory": "سجل السحب",
+    "noWithdrawals": "لا توجد عمليات سحب بعد.",
+    "insufficientBalance": "رصيد غير كافٍ"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "اللغة",
+    "select": "اختر اللغة"
+  },
+  "profile": {
+    "language": "اللغة",
+    "languageHint": "اختر لغتك المفضلة للواجهة.",
+    "languageUpdated": "تم تحديث اللغة"
+  }
+}

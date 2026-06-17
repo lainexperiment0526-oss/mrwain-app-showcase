@@ -386,7 +386,7 @@ export default function AppDetail() {
         <DialogHeader>
           <DialogTitle>Choose payment method</DialogTitle>
           <DialogDescription>
-            {app && `Pay ${app.price_amount} for ${app.name}`}
+            {app && `Pay ${app.price_amount} π for ${app.name}`}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-2 pt-2">
@@ -394,7 +394,7 @@ export default function AppDetail() {
             Pay with Pi ({app?.price_amount} π)
           </Button>
           <Button variant="secondary" onClick={() => processPayment('openpay')} disabled={isPaying}>
-            Pay with OpenPay ({app?.price_amount} OUSD)
+            Pay with OpenPay ({app?.price_amount} π)
           </Button>
           {(app as any)?.openpay_link && (
             <Button variant="outline" onClick={() => processPayment('openpay_link')} disabled={isPaying}>
