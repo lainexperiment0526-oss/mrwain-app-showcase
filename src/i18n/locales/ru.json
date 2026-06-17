@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "Назад",
+    "search": "Поиск",
+    "searchApps": "Поиск приложений...",
+    "all": "Все",
+    "clear": "Очистить",
+    "loading": "Загрузка...",
+    "signIn": "Войти",
+    "signOut": "Выйти",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "saving": "Сохранение...",
+    "saved": "Сохранено",
+    "submit": "Отправить",
+    "processing": "Обработка...",
+    "comingSoon": "Скоро",
+    "getStarted": "Начать",
+    "open": "Открыть"
+  },
+  "nav": {
+    "home": "Главная",
+    "browseApps": "Просмотр приложений",
+    "newApps": "Новые приложения",
+    "topApps": "Топ приложений",
+    "submitApp": "Отправить приложение",
+    "favorites": "Избранное",
+    "feedback": "Обратная связь",
+    "blog": "Блог",
+    "purchases": "Покупки",
+    "profile": "Профиль",
+    "downloadApp": "Скачать приложение",
+    "download": "Скачать",
+    "inviteEarn": "Приглашай и зарабатывай",
+    "developer": "Разработчик",
+    "developerDashboard": "Панель разработчика",
+    "myApps": "Мои приложения",
+    "testnetReward": "Награда Testnet",
+    "adNetwork": "Рекламная сеть",
+    "advertiserDashboard": "Панель рекламодателя",
+    "analytics": "Аналитика",
+    "admin": "Администрирование",
+    "appModeration": "Модерация приложений",
+    "adModeration": "Модерация рекламы",
+    "blogManager": "Управление блогом",
+    "legal": "Правовая информация",
+    "about": "О OpenApp",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования",
+    "license": "Лицензия",
+    "lightMode": "Светлая тема",
+    "darkMode": "Тёмная тема"
+  },
+  "bottomNav": {
+    "home": "Главная",
+    "ads": "Реклама",
+    "apps": "Приложения",
+    "analytics": "Аналитика",
+    "search": "Поиск"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp от Mrwain Organization",
+    "about": "О нас",
+    "blog": "Блог",
+    "legal": "Правовая информация",
+    "privacy": "Конфиденциальность",
+    "license": "Лицензия"
+  },
+  "home": {
+    "searchResults": "Результаты поиска",
+    "noAppsFound": "Приложения не найдены",
+    "topApps": "Топ приложений",
+    "newArrivals": "Новинки",
+    "noAppsYet": "Пока нет приложений"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "Войдите, чтобы продолжить",
+    "description": "Открывайте проверенные приложения, отслеживайте избранное и управляйте своими заявками в одном месте.",
+    "piNetwork": "Pi Network",
+    "email": "Эл. почта",
+    "signInWithPi": "Войти через Pi Network",
+    "connecting": "Подключение...",
+    "piBrowserRequired": "Для входа через Pi требуется Pi Browser",
+    "benefit1": "Безопасный вход через Pi Network. Без эл. почты и пароля.",
+    "benefit2": "Доступ к вашим приложениям, рекламе и аналитике на всех устройствах.",
+    "benefit3": "Впервые здесь? Установите Pi Browser, чтобы начать.",
+    "note": "Примечание: используйте вход по эл. почте, если планируете пользоваться мобильным приложением OpenApp.",
+    "welcomeBack": "С возвращением!"
+  },
+  "wallet": {
+    "availableBalance": "Доступный баланс",
+    "withdrawEarnings": "Вывести доход",
+    "amount": "Сумма (Pi)",
+    "withdraw": "Вывести",
+    "withdrawalHistory": "История выводов",
+    "noWithdrawals": "Выводов пока нет.",
+    "insufficientBalance": "Недостаточно средств"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "Язык",
+    "select": "Выберите язык"
+  },
+  "profile": {
+    "language": "Язык",
+    "languageHint": "Выберите предпочитаемый язык интерфейса.",
+    "languageUpdated": "Язык обновлён"
+  }
+}

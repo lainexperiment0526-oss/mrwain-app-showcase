@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "뒤로",
+    "search": "검색",
+    "searchApps": "앱 검색...",
+    "all": "전체",
+    "clear": "지우기",
+    "loading": "불러오는 중...",
+    "signIn": "로그인",
+    "signOut": "로그아웃",
+    "cancel": "취소",
+    "save": "저장",
+    "saving": "저장 중...",
+    "saved": "저장됨",
+    "submit": "제출",
+    "processing": "처리 중...",
+    "comingSoon": "출시 예정",
+    "getStarted": "시작하기",
+    "open": "열기"
+  },
+  "nav": {
+    "home": "홈",
+    "browseApps": "앱 둘러보기",
+    "newApps": "새 앱",
+    "topApps": "인기 앱",
+    "submitApp": "앱 등록",
+    "favorites": "즐겨찾기",
+    "feedback": "피드백",
+    "blog": "블로그",
+    "purchases": "구매 내역",
+    "profile": "프로필",
+    "downloadApp": "앱 다운로드",
+    "download": "다운로드",
+    "inviteEarn": "초대하고 적립하기",
+    "developer": "개발자",
+    "developerDashboard": "개발자 대시보드",
+    "myApps": "내 앱",
+    "testnetReward": "테스트넷 보상",
+    "adNetwork": "광고 네트워크",
+    "advertiserDashboard": "광고주 대시보드",
+    "analytics": "분석",
+    "admin": "관리자",
+    "appModeration": "앱 검토",
+    "adModeration": "광고 검토",
+    "blogManager": "블로그 관리",
+    "legal": "법적 고지",
+    "about": "OpenApp 소개",
+    "privacy": "개인정보 처리방침",
+    "terms": "서비스 약관",
+    "license": "라이선스",
+    "lightMode": "라이트 모드",
+    "darkMode": "다크 모드"
+  },
+  "bottomNav": {
+    "home": "홈",
+    "ads": "광고",
+    "apps": "앱",
+    "analytics": "분석",
+    "search": "검색"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp by Mrwain Organization",
+    "about": "소개",
+    "blog": "블로그",
+    "legal": "법적 고지",
+    "privacy": "개인정보",
+    "license": "라이선스"
+  },
+  "home": {
+    "searchResults": "검색 결과",
+    "noAppsFound": "앱을 찾을 수 없습니다",
+    "topApps": "인기 앱",
+    "newArrivals": "신규 등록",
+    "noAppsYet": "아직 앱이 없습니다"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "계속하려면 로그인하세요",
+    "description": "신뢰할 수 있는 앱을 찾고, 즐겨찾기를 관리하고, 제출 내역을 한곳에서 관리하세요.",
+    "piNetwork": "Pi Network",
+    "email": "이메일",
+    "signInWithPi": "Pi Network로 로그인",
+    "connecting": "연결 중...",
+    "piBrowserRequired": "Pi 로그인에는 Pi Browser가 필요합니다",
+    "benefit1": "Pi Network로 안전하게 로그인. 이메일이나 비밀번호가 필요 없습니다.",
+    "benefit2": "모든 기기에서 앱 목록, 광고, 분석에 액세스하세요.",
+    "benefit3": "처음이신가요? Pi Browser를 설치하여 시작하세요.",
+    "note": "참고: OpenApp 모바일 애플리케이션을 사용할 계획이라면 이메일 인증을 사용하세요.",
+    "welcomeBack": "다시 오신 것을 환영합니다!"
+  },
+  "wallet": {
+    "availableBalance": "사용 가능 잔액",
+    "withdrawEarnings": "수익 출금",
+    "amount": "금액 (Pi)",
+    "withdraw": "출금",
+    "withdrawalHistory": "출금 내역",
+    "noWithdrawals": "아직 출금 내역이 없습니다.",
+    "insufficientBalance": "잔액이 부족합니다"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "언어",
+    "select": "언어 선택"
+  },
+  "profile": {
+    "language": "언어",
+    "languageHint": "인터페이스에 사용할 언어를 선택하세요.",
+    "languageUpdated": "언어가 업데이트되었습니다"
+  }
+}

@@ -1,5 +1,5 @@
 import { Search, X } from 'lucide-react';
-import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface SearchBarProps {
   value: string;
@@ -7,7 +7,9 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({ value, onChange, placeholder = 'Search apps...' }: SearchBarProps) {
+export function SearchBar({ value, onChange, placeholder }: SearchBarProps) {
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t('common.searchApps');
   return (
     <div className="relative">
       <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
@@ -15,7 +17,7 @@ export function SearchBar({ value, onChange, placeholder = 'Search apps...' }: S
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         className="w-full rounded-xl bg-secondary py-3 pl-12 pr-10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
       />
       {value && (

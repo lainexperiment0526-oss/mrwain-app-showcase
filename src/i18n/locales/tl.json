@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "Bumalik",
+    "search": "Maghanap",
+    "searchApps": "Maghanap ng mga app...",
+    "all": "Lahat",
+    "clear": "I-clear",
+    "loading": "Naglo-load...",
+    "signIn": "Mag-sign in",
+    "signOut": "Mag-sign out",
+    "cancel": "Kanselahin",
+    "save": "I-save",
+    "saving": "Sini-save...",
+    "saved": "Na-save",
+    "submit": "Isumite",
+    "processing": "Pinoproseso...",
+    "comingSoon": "Malapit na",
+    "getStarted": "Magsimula",
+    "open": "Buksan"
+  },
+  "nav": {
+    "home": "Home",
+    "browseApps": "Mag-browse ng Apps",
+    "newApps": "Bagong Apps",
+    "topApps": "Nangungunang Apps",
+    "submitApp": "Magsumite ng App",
+    "favorites": "Mga Paborito",
+    "feedback": "Feedback",
+    "blog": "Blog",
+    "purchases": "Mga Binili",
+    "profile": "Profile",
+    "downloadApp": "I-download ang App",
+    "download": "I-download",
+    "inviteEarn": "Mag-imbita at Kumita",
+    "developer": "Developer",
+    "developerDashboard": "Developer Dashboard",
+    "myApps": "Aking mga App",
+    "testnetReward": "Gantimpala sa Testnet",
+    "adNetwork": "Ad Network",
+    "advertiserDashboard": "Advertiser Dashboard",
+    "analytics": "Analytics",
+    "admin": "Admin",
+    "appModeration": "Pag-moderate ng App",
+    "adModeration": "Pag-moderate ng Ad",
+    "blogManager": "Blog Manager",
+    "legal": "Legal",
+    "about": "Tungkol sa OpenApp",
+    "privacy": "Patakaran sa Privacy",
+    "terms": "Mga Tuntunin ng Serbisyo",
+    "license": "Lisensya",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "ads": "Mga Ad",
+    "apps": "Apps",
+    "analytics": "Analytics",
+    "search": "Maghanap"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp ng Mrwain Organization",
+    "about": "Tungkol",
+    "blog": "Blog",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "license": "Lisensya"
+  },
+  "home": {
+    "searchResults": "Mga Resulta ng Paghahanap",
+    "noAppsFound": "Walang nahanap na app",
+    "topApps": "Nangungunang Apps",
+    "newArrivals": "Mga Bagong Dating",
+    "noAppsYet": "Wala pang app"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "Mag-sign in upang magpatuloy",
+    "description": "Tuklasin ang mga pinagkakatiwalaang app, subaybayan ang iyong mga paborito, at pamahalaan ang iyong mga isinumite sa iisang lugar.",
+    "piNetwork": "Pi Network",
+    "email": "Email",
+    "signInWithPi": "Mag-sign in gamit ang Pi Network",
+    "connecting": "Kumokonekta...",
+    "piBrowserRequired": "Ang pag-sign in sa Pi ay nangangailangan ng Pi Browser",
+    "benefit1": "Ligtas na pag-sign in gamit ang Pi Network. Walang email o password na kailangan.",
+    "benefit2": "I-access ang iyong mga app listing, ad, at analytics sa lahat ng device.",
+    "benefit3": "Bago dito? I-install ang Pi Browser para magsimula.",
+    "note": "Tandaan: Gamitin ang email authentication kung balak mong gamitin ang OpenApp mobile application.",
+    "welcomeBack": "Maligayang pagbabalik!"
+  },
+  "wallet": {
+    "availableBalance": "Available na Balanse",
+    "withdrawEarnings": "Mag-withdraw ng Kita",
+    "amount": "Halaga (Pi)",
+    "withdraw": "Mag-withdraw",
+    "withdrawalHistory": "Kasaysayan ng Withdrawal",
+    "noWithdrawals": "Wala pang withdrawal.",
+    "insufficientBalance": "Hindi sapat na balanse"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "Wika",
+    "select": "Pumili ng wika"
+  },
+  "profile": {
+    "language": "Wika",
+    "languageHint": "Piliin ang iyong gustong wika para sa interface.",
+    "languageUpdated": "Na-update ang wika"
+  }
+}

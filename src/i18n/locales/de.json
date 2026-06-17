@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "Zurück",
+    "search": "Suchen",
+    "searchApps": "Apps suchen...",
+    "all": "Alle",
+    "clear": "Löschen",
+    "loading": "Wird geladen...",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "saved": "Gespeichert",
+    "submit": "Absenden",
+    "processing": "Wird verarbeitet...",
+    "comingSoon": "Demnächst",
+    "getStarted": "Loslegen",
+    "open": "Öffnen"
+  },
+  "nav": {
+    "home": "Startseite",
+    "browseApps": "Apps durchsuchen",
+    "newApps": "Neue Apps",
+    "topApps": "Top-Apps",
+    "submitApp": "App einreichen",
+    "favorites": "Favoriten",
+    "feedback": "Feedback",
+    "blog": "Blog",
+    "purchases": "Käufe",
+    "profile": "Profil",
+    "downloadApp": "App herunterladen",
+    "download": "Herunterladen",
+    "inviteEarn": "Einladen & Verdienen",
+    "developer": "Entwickler",
+    "developerDashboard": "Entwickler-Dashboard",
+    "myApps": "Meine Apps",
+    "testnetReward": "Testnet-Belohnung",
+    "adNetwork": "Werbenetzwerk",
+    "advertiserDashboard": "Werbetreibenden-Dashboard",
+    "analytics": "Analysen",
+    "admin": "Administration",
+    "appModeration": "App-Moderation",
+    "adModeration": "Anzeigen-Moderation",
+    "blogManager": "Blog-Verwaltung",
+    "legal": "Rechtliches",
+    "about": "Über OpenApp",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "license": "Lizenz",
+    "lightMode": "Heller Modus",
+    "darkMode": "Dunkler Modus"
+  },
+  "bottomNav": {
+    "home": "Start",
+    "ads": "Anzeigen",
+    "apps": "Apps",
+    "analytics": "Analysen",
+    "search": "Suche"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp von Mrwain Organization",
+    "about": "Über uns",
+    "blog": "Blog",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutz",
+    "license": "Lizenz"
+  },
+  "home": {
+    "searchResults": "Suchergebnisse",
+    "noAppsFound": "Keine Apps gefunden",
+    "topApps": "Top-Apps",
+    "newArrivals": "Neuzugänge",
+    "noAppsYet": "Noch keine Apps"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "Melde dich an, um fortzufahren",
+    "description": "Entdecke vertrauenswürdige Apps, verfolge deine Favoriten und verwalte deine Einreichungen an einem Ort.",
+    "piNetwork": "Pi Network",
+    "email": "E-Mail",
+    "signInWithPi": "Mit Pi Network anmelden",
+    "connecting": "Verbindung wird hergestellt...",
+    "piBrowserRequired": "Für die Pi-Anmeldung wird Pi Browser benötigt",
+    "benefit1": "Sichere Anmeldung mit Pi Network. Keine E-Mail oder Passwort erforderlich.",
+    "benefit2": "Greife auf allen Geräten auf deine App-Einträge, Anzeigen und Analysen zu.",
+    "benefit3": "Neu hier? Installiere Pi Browser, um zu starten.",
+    "note": "Hinweis: Verwende die E-Mail-Authentifizierung, wenn du die mobile OpenApp-Anwendung nutzen möchtest.",
+    "welcomeBack": "Willkommen zurück!"
+  },
+  "wallet": {
+    "availableBalance": "Verfügbares Guthaben",
+    "withdrawEarnings": "Einnahmen auszahlen",
+    "amount": "Betrag (Pi)",
+    "withdraw": "Auszahlen",
+    "withdrawalHistory": "Auszahlungsverlauf",
+    "noWithdrawals": "Noch keine Auszahlungen.",
+    "insufficientBalance": "Unzureichendes Guthaben"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "Sprache",
+    "select": "Sprache auswählen"
+  },
+  "profile": {
+    "language": "Sprache",
+    "languageHint": "Wähle deine bevorzugte Sprache für die Oberfläche.",
+    "languageUpdated": "Sprache aktualisiert"
+  }
+}

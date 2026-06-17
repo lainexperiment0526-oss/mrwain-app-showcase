@@ -13,6 +13,7 @@ import { Footer } from "@/components/Footer";
 import { OpenAppModal } from "@/components/OpenAppModal";
 import { OpenAppModalProvider, useOpenAppModal } from "@/contexts/OpenAppModalContext";
 import { captureRefCodeFromURL, useAffiliate } from "@/hooks/useAffiliate";
+import { AFFILIATE_ENABLED } from "@/config/features";
 import { RequireAuth } from "@/components/RequireAuth";
 import Index from "./pages/Index";
 import Affiliate from "./pages/Affiliate";
@@ -50,7 +51,9 @@ function AppContent() {
   const { attachPendingRefCode } = useAffiliate();
 
   useEffect(() => {
-    captureRefCodeFromURL();
+    if (AFFILIATE_ENABLED) {
+      captureRefCodeFromURL();
+    }
     const hideTimer = setTimeout(() => setHideSplash(true), 1000);
     const removeTimer = setTimeout(() => setShowSplash(false), 1400);
 
@@ -62,7 +65,9 @@ function AppContent() {
 
   // Attach pending referral code whenever a user becomes available
   useEffect(() => {
-    attachPendingRefCode();
+    if (AFFILIATE_ENABLED) {
+      attachPendingRefCode();
+    }
   }, [attachPendingRefCode]);
 
   return (
@@ -101,7 +106,9 @@ function AppContent() {
           <Route path="/blog" element={<RequireAuth><Blog /></RequireAuth>} />
           <Route path="/blog/:slug" element={<RequireAuth><BlogPostPage /></RequireAuth>} />
           <Route path="/admin/blog" element={<RequireAuth><AdminBlog /></RequireAuth>} />
-          <Route path="/affiliate" element={<RequireAuth><Affiliate /></RequireAuth>} />
+          {AFFILIATE_ENABLED && (
+            <Route path="/affiliate" element={<RequireAuth><Affiliate /></RequireAuth>} />
+          )}
           <Route path="*" element={<NotFound />} />
         </Routes>
           <Footer />

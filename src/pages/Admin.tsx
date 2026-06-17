@@ -400,15 +400,15 @@ export default function Admin() {
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl bg-card p-4 border border-border">
             <p className="text-xs text-muted-foreground">Total Paid Income</p>
-            <p className="text-2xl font-bold text-foreground">{financeSummary.gross.toFixed(2)} pi</p>
+            <p className="text-2xl font-bold text-foreground">{financeSummary.gross.toFixed(2)} π</p>
           </div>
           <div className="rounded-2xl bg-card p-4 border border-border">
             <p className="text-xs text-muted-foreground">Developer Share (70%)</p>
-            <p className="text-2xl font-bold text-foreground">{financeSummary.developer.toFixed(2)} pi</p>
+            <p className="text-2xl font-bold text-foreground">{financeSummary.developer.toFixed(2)} π</p>
           </div>
           <div className="rounded-2xl bg-card p-4 border border-border">
             <p className="text-xs text-muted-foreground">Platform Fee (30%)</p>
-            <p className="text-2xl font-bold text-foreground">{financeSummary.platform.toFixed(2)} pi</p>
+            <p className="text-2xl font-bold text-foreground">{financeSummary.platform.toFixed(2)} π</p>
           </div>
         </div>
 
@@ -423,10 +423,10 @@ export default function Admin() {
                   <div>
                     <p className="font-medium text-foreground">{row.app_name}</p>
                     <p className="text-xs text-muted-foreground">
-                      Gross: {row.gross.toFixed(2)} pi | Platform: {row.platform.toFixed(2)} pi
+                      Gross: {row.gross.toFixed(2)} π | Platform: {row.platform.toFixed(2)} π
                     </p>
                   </div>
-                  <p className="font-semibold text-foreground">{row.developer.toFixed(2)} pi</p>
+                  <p className="font-semibold text-foreground">{row.developer.toFixed(2)} π</p>
                 </div>
               ))}
             </div>

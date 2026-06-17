@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "वापस",
+    "search": "खोजें",
+    "searchApps": "ऐप्स खोजें...",
+    "all": "सभी",
+    "clear": "साफ़ करें",
+    "loading": "लोड हो रहा है...",
+    "signIn": "साइन इन करें",
+    "signOut": "साइन आउट करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "saving": "सहेजा जा रहा है...",
+    "saved": "सहेजा गया",
+    "submit": "जमा करें",
+    "processing": "प्रोसेस हो रहा है...",
+    "comingSoon": "जल्द आ रहा है",
+    "getStarted": "शुरू करें",
+    "open": "खोलें"
+  },
+  "nav": {
+    "home": "होम",
+    "browseApps": "ऐप्स ब्राउज़ करें",
+    "newApps": "नए ऐप्स",
+    "topApps": "शीर्ष ऐप्स",
+    "submitApp": "ऐप सबमिट करें",
+    "favorites": "पसंदीदा",
+    "feedback": "प्रतिक्रिया",
+    "blog": "ब्लॉग",
+    "purchases": "खरीदारी",
+    "profile": "प्रोफ़ाइल",
+    "downloadApp": "ऐप डाउनलोड करें",
+    "download": "डाउनलोड",
+    "inviteEarn": "आमंत्रित करें और कमाएँ",
+    "developer": "डेवलपर",
+    "developerDashboard": "डेवलपर डैशबोर्ड",
+    "myApps": "मेरे ऐप्स",
+    "testnetReward": "टेस्टनेट इनाम",
+    "adNetwork": "विज्ञापन नेटवर्क",
+    "advertiserDashboard": "विज्ञापनदाता डैशबोर्ड",
+    "analytics": "विश्लेषण",
+    "admin": "एडमिन",
+    "appModeration": "ऐप मॉडरेशन",
+    "adModeration": "विज्ञापन मॉडरेशन",
+    "blogManager": "ब्लॉग प्रबंधक",
+    "legal": "कानूनी",
+    "about": "OpenApp के बारे में",
+    "privacy": "गोपनीयता नीति",
+    "terms": "सेवा की शर्तें",
+    "license": "लाइसेंस",
+    "lightMode": "लाइट मोड",
+    "darkMode": "डार्क मोड"
+  },
+  "bottomNav": {
+    "home": "होम",
+    "ads": "विज्ञापन",
+    "apps": "ऐप्स",
+    "analytics": "विश्लेषण",
+    "search": "खोजें"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp द्वारा Mrwain Organization",
+    "about": "परिचय",
+    "blog": "ब्लॉग",
+    "legal": "कानूनी",
+    "privacy": "गोपनीयता",
+    "license": "लाइसेंस"
+  },
+  "home": {
+    "searchResults": "खोज परिणाम",
+    "noAppsFound": "कोई ऐप नहीं मिला",
+    "topApps": "शीर्ष ऐप्स",
+    "newArrivals": "नई पेशकश",
+    "noAppsYet": "अभी तक कोई ऐप नहीं"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "जारी रखने के लिए साइन इन करें",
+    "description": "विश्वसनीय ऐप्स खोजें, अपने पसंदीदा ट्रैक करें और अपने सबमिशन एक ही जगह प्रबंधित करें।",
+    "piNetwork": "Pi Network",
+    "email": "ईमेल",
+    "signInWithPi": "Pi Network से साइन इन करें",
+    "connecting": "कनेक्ट हो रहा है...",
+    "piBrowserRequired": "Pi साइन-इन के लिए Pi Browser आवश्यक है",
+    "benefit1": "Pi Network के साथ सुरक्षित साइन-इन। ईमेल या पासवर्ड की आवश्यकता नहीं।",
+    "benefit2": "सभी डिवाइस पर अपनी ऐप लिस्टिंग, विज्ञापन और विश्लेषण तक पहुँचें।",
+    "benefit3": "यहाँ नए हैं? शुरू करने के लिए Pi Browser इंस्टॉल करें।",
+    "note": "नोट: यदि आप OpenApp मोबाइल एप्लिकेशन का उपयोग करने की योजना बना रहे हैं तो ईमेल प्रमाणीकरण का उपयोग करें।",
+    "welcomeBack": "वापसी पर स्वागत है!"
+  },
+  "wallet": {
+    "availableBalance": "उपलब्ध शेष राशि",
+    "withdrawEarnings": "कमाई निकालें",
+    "amount": "राशि (Pi)",
+    "withdraw": "निकालें",
+    "withdrawalHistory": "निकासी इतिहास",
+    "noWithdrawals": "अभी तक कोई निकासी नहीं।",
+    "insufficientBalance": "अपर्याप्त शेष राशि"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "भाषा",
+    "select": "भाषा चुनें"
+  },
+  "profile": {
+    "language": "भाषा",
+    "languageHint": "इंटरफ़ेस के लिए अपनी पसंदीदा भाषा चुनें।",
+    "languageUpdated": "भाषा अपडेट की गई"
+  }
+}

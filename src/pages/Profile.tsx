@@ -1,15 +1,35 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Header } from '@/components/Header';
 import { useAuth } from '@/hooks/useAuth';
 import { usePiNetwork } from '@/hooks/usePiNetwork';
 import { Button } from '@/components/ui/button';
 import { PageLoader } from '@/components/PageLoader';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { SUPPORTED_LANGUAGES } from '@/i18n/languages';
+import { useLanguagePreference } from '@/hooks/useLanguagePreference';
+import { getLanguageMeta } from '@/i18n/languages';
+import { toast } from 'sonner';
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { user, loading, signOut } = useAuth();
   const { piUser } = usePiNetwork();
+  const { changeLanguage } = useLanguagePreference();
+  const currentLanguage = getLanguageMeta(i18n.language)?.code ?? 'en';
+
+  const handleLanguageChange = async (code: string) => {
+    await changeLanguage(code);
+    toast.success(t('profile.languageUpdated'));
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -73,10 +93,30 @@ export default function Profile() {
                 </div>
               </div>
             )}
+
+            <div className="rounded-xl border border-border p-4">
+              <p className="text-xs font-semibold uppercase text-muted-foreground">{t('profile.language')}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t('profile.languageHint')}</p>
+              <div className="mt-3">
+                <Select value={currentLanguage} onValueChange={handleLanguageChange}>
+                  <SelectTrigger className="w-full sm:w-64">
+                    <SelectValue placeholder={t('language.select')} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {SUPPORTED_LANGUAGES.map((lang) => (
+                      <SelectItem key={lang.code} value={lang.code}>
+                        {lang.nativeName}
+                        {lang.nativeName !== lang.name ? ` (${lang.name})` : ''}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
           <div className="mt-6 flex justify-end">
-            <Button variant="destructive" onClick={signOut}>Sign Out</Button>
+            <Button variant="destructive" onClick={signOut}>{t('common.signOut')}</Button>
           </div>
         </div>
       </main>

@@ -1,27 +1,30 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Layers, Megaphone, BarChart3, Search, Home } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { icon: Home, label: 'Home', path: '/' },
-  { icon: Megaphone, label: 'Ads', path: '/advertiser' },
-  { icon: Layers, label: 'Apps', path: '/submit' },
-  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-  { icon: Search, label: 'Search', path: '/?search=1' },
+  { icon: Home, labelKey: 'bottomNav.home', path: '/' },
+  { icon: Megaphone, labelKey: 'bottomNav.ads', path: '/advertiser' },
+  { icon: Layers, labelKey: 'bottomNav.apps', path: '/submit' },
+  { icon: BarChart3, labelKey: 'bottomNav.analytics', path: '/analytics' },
+  { icon: Search, labelKey: 'bottomNav.search', path: '/?search=1' },
 ];
 
 export function BottomNav() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/80 backdrop-blur-xl safe-area-inset-bottom">
       <div className="mx-auto flex max-w-lg items-center justify-around py-2">
-        {navItems.map(({ icon: Icon, label, path }) => {
+        {navItems.map(({ icon: Icon, labelKey, path }) => {
           const isActive = location.pathname === path;
-          
+          const label = t(labelKey);
+
           return (
             <Link
-              key={label}
+              key={labelKey}
               to={path}
               className={cn(
                 'flex flex-col items-center gap-0.5 px-3 py-1 transition-colors',

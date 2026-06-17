@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/hooks/useAuth';
 import { useOpenAppModal } from '@/contexts/OpenAppModalContext';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { AFFILIATE_ENABLED } from '@/config/features';
 import {
   Sheet,
   SheetContent,
@@ -36,7 +39,6 @@ import {
   Receipt,
   BookOpen,
   Download,
-  Gift,
   Coins,
 } from 'lucide-react';
 
@@ -73,6 +75,7 @@ function MenuItem({ icon, label, href, onClick, isActive }: MenuItemProps) {
 }
 
 export function MenuDrawer() {
+  const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const { user, isAdmin, signOut } = useAuth();
   const { setShowOpenAppModal } = useOpenAppModal();
@@ -90,63 +93,70 @@ export function MenuDrawer() {
       </SheetTrigger>
       <SheetContent side="right" className="w-72 p-0 flex flex-col">
         <SheetHeader className="p-4 pb-2">
-          <SheetTitle className="text-left">OpenApp</SheetTitle>
+          <SheetTitle className="text-left">{t('common.appName')}</SheetTitle>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto px-3 py-2 space-y-1">
-          <MenuItem icon={<Home className="h-5 w-5" />} label="Home" href="/" />
-          <MenuItem icon={<Grid3X3 className="h-5 w-5" />} label="Browse Apps" href="/" />
-          <MenuItem icon={<Sparkles className="h-5 w-5" />} label="New Apps" href="/new" />
-          <MenuItem icon={<Trophy className="h-5 w-5" />} label="Top Apps" href="/top" />
-          <MenuItem icon={<PlusCircle className="h-5 w-5" />} label="Submit App" href="/submit" />
-          {user && <MenuItem icon={<Bookmark className="h-5 w-5" />} label="Favorites" href="/bookmarks" />}
-          <MenuItem icon={<MessageSquare className="h-5 w-5" />} label="Feedback" href="/feedback" />
-          <MenuItem icon={<BookOpen className="h-5 w-5" />} label="Blog" href="/blog" />
-          {user && <MenuItem icon={<Receipt className="h-5 w-5" />} label="Purchases" href="/purchases" />}
-          {user && <MenuItem icon={<User className="h-5 w-5" />} label="Profile" href="/profile" />}
-          <MenuItem icon={<Download className="h-5 w-5" />} label="Download App" onClick={handleOpenAppModal} />
-          <MenuItem icon={<Gift className="h-5 w-5" />} label="Invite & Earn" href="/affiliate" />
+          <MenuItem icon={<Home className="h-5 w-5" />} label={t('nav.home')} href="/" />
+          <MenuItem icon={<Grid3X3 className="h-5 w-5" />} label={t('nav.browseApps')} href="/" />
+          <MenuItem icon={<Sparkles className="h-5 w-5" />} label={t('nav.newApps')} href="/new" />
+          <MenuItem icon={<Trophy className="h-5 w-5" />} label={t('nav.topApps')} href="/top" />
+          <MenuItem icon={<PlusCircle className="h-5 w-5" />} label={t('nav.submitApp')} href="/submit" />
+          {user && <MenuItem icon={<Bookmark className="h-5 w-5" />} label={t('nav.favorites')} href="/bookmarks" />}
+          <MenuItem icon={<MessageSquare className="h-5 w-5" />} label={t('nav.feedback')} href="/feedback" />
+          <MenuItem icon={<BookOpen className="h-5 w-5" />} label={t('nav.blog')} href="/blog" />
+          {user && <MenuItem icon={<Receipt className="h-5 w-5" />} label={t('nav.purchases')} href="/purchases" />}
+          {user && <MenuItem icon={<User className="h-5 w-5" />} label={t('nav.profile')} href="/profile" />}
+          <MenuItem icon={<Download className="h-5 w-5" />} label={t('nav.downloadApp')} onClick={handleOpenAppModal} />
+          {AFFILIATE_ENABLED && (
+            <MenuItem icon={<Coins className="h-5 w-5" />} label={t('nav.inviteEarn')} href="/affiliate" />
+          )}
 
           <div className="border-t border-border mt-2 pt-3 space-y-1">
-            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">Developer</p>
-            <MenuItem icon={<Code2 className="h-5 w-5" />} label="Developer Dashboard" href="/developer-dashboard" />
-            {user && <MenuItem icon={<AppWindow className="h-5 w-5" />} label="My Apps" href="/my-apps" />}
-            <MenuItem icon={<Coins className="h-5 w-5" />} label="Testnet Reward" href="/testnet-reward" />
+            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">{t('nav.developer')}</p>
+            <MenuItem icon={<Code2 className="h-5 w-5" />} label={t('nav.developerDashboard')} href="/developer-dashboard" />
+            {user && <MenuItem icon={<AppWindow className="h-5 w-5" />} label={t('nav.myApps')} href="/my-apps" />}
+            <MenuItem icon={<Coins className="h-5 w-5" />} label={t('nav.testnetReward')} href="/testnet-reward" />
           </div>
 
           <div className="border-t border-border mt-2 pt-3 space-y-1">
-            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">Ad Network</p>
-            <MenuItem icon={<Megaphone className="h-5 w-5" />} label="Advertiser Dashboard" href="/advertiser" />
-            <MenuItem icon={<BarChart3 className="h-5 w-5" />} label="Analytics" href="/analytics" />
+            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">{t('nav.adNetwork')}</p>
+            <MenuItem icon={<Megaphone className="h-5 w-5" />} label={t('nav.advertiserDashboard')} href="/advertiser" />
+            <MenuItem icon={<BarChart3 className="h-5 w-5" />} label={t('nav.analytics')} href="/analytics" />
           </div>
 
           {isAdmin && (
             <div className="border-t border-border mt-2 pt-3 space-y-1">
-              <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">Admin</p>
-              <MenuItem icon={<Shield className="h-5 w-5" />} label="App Moderation" href="/admin" />
-              <MenuItem icon={<Shield className="h-5 w-5" />} label="Ad Moderation" href="/ad-moderation" />
-              <MenuItem icon={<BookOpen className="h-5 w-5" />} label="Blog Manager" href="/admin/blog" />
+              <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">{t('nav.admin')}</p>
+              <MenuItem icon={<Shield className="h-5 w-5" />} label={t('nav.appModeration')} href="/admin" />
+              <MenuItem icon={<Shield className="h-5 w-5" />} label={t('nav.adModeration')} href="/ad-moderation" />
+              <MenuItem icon={<BookOpen className="h-5 w-5" />} label={t('nav.blogManager')} href="/admin/blog" />
             </div>
           )}
 
           <div className="border-t border-border mt-2 pt-3 space-y-1">
-            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">Legal</p>
-            <MenuItem icon={<Info className="h-5 w-5" />} label="About OpenApp" href="/about" />
-            <MenuItem icon={<ShieldCheck className="h-5 w-5" />} label="Privacy Policy" href="/privacy" />
-            <MenuItem icon={<Scale className="h-5 w-5" />} label="Terms of Service" href="/terms" />
-            <MenuItem icon={<FileText className="h-5 w-5" />} label="License" href="/license" />
+            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">{t('nav.legal')}</p>
+            <MenuItem icon={<Info className="h-5 w-5" />} label={t('nav.about')} href="/about" />
+            <MenuItem icon={<ShieldCheck className="h-5 w-5" />} label={t('nav.privacy')} href="/privacy" />
+            <MenuItem icon={<Scale className="h-5 w-5" />} label={t('nav.terms')} href="/terms" />
+            <MenuItem icon={<FileText className="h-5 w-5" />} label={t('nav.license')} href="/license" />
+          </div>
+
+          <div className="border-t border-border mt-2 pt-3 space-y-1">
+            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase mb-2">{t('language.label')}</p>
+            <LanguageSelector variant="full" />
           </div>
 
           <div className="border-t border-border mt-2 pt-3 space-y-1">
             <MenuItem
               icon={theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              label={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              label={theme === 'dark' ? t('nav.lightMode') : t('nav.darkMode')}
               onClick={toggleTheme}
             />
             {user ? (
-              <MenuItem icon={<LogOut className="h-5 w-5" />} label="Sign Out" onClick={signOut} />
+              <MenuItem icon={<LogOut className="h-5 w-5" />} label={t('common.signOut')} onClick={signOut} />
             ) : (
-              <MenuItem icon={<LogIn className="h-5 w-5" />} label="Sign In" href="/auth" />
+              <MenuItem icon={<LogIn className="h-5 w-5" />} label={t('common.signIn')} href="/auth" />
             )}
           </div>
         </div>

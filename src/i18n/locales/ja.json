@@ -1,0 +1,115 @@
+{
+  "common": {
+    "appName": "OpenApp",
+    "back": "戻る",
+    "search": "検索",
+    "searchApps": "アプリを検索...",
+    "all": "すべて",
+    "clear": "クリア",
+    "loading": "読み込み中...",
+    "signIn": "ログイン",
+    "signOut": "ログアウト",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "saving": "保存中...",
+    "saved": "保存しました",
+    "submit": "送信",
+    "processing": "処理中...",
+    "comingSoon": "近日公開",
+    "getStarted": "はじめる",
+    "open": "開く"
+  },
+  "nav": {
+    "home": "ホーム",
+    "browseApps": "アプリを見る",
+    "newApps": "新着アプリ",
+    "topApps": "人気アプリ",
+    "submitApp": "アプリを申請",
+    "favorites": "お気に入り",
+    "feedback": "フィードバック",
+    "blog": "ブログ",
+    "purchases": "購入履歴",
+    "profile": "プロフィール",
+    "downloadApp": "アプリをダウンロード",
+    "download": "ダウンロード",
+    "inviteEarn": "招待して獲得",
+    "developer": "開発者",
+    "developerDashboard": "開発者ダッシュボード",
+    "myApps": "マイアプリ",
+    "testnetReward": "テストネット報酬",
+    "adNetwork": "広告ネットワーク",
+    "advertiserDashboard": "広告主ダッシュボード",
+    "analytics": "分析",
+    "admin": "管理者",
+    "appModeration": "アプリ審査",
+    "adModeration": "広告審査",
+    "blogManager": "ブログ管理",
+    "legal": "法的情報",
+    "about": "OpenApp について",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "license": "ライセンス",
+    "lightMode": "ライトモード",
+    "darkMode": "ダークモード"
+  },
+  "bottomNav": {
+    "home": "ホーム",
+    "ads": "広告",
+    "apps": "アプリ",
+    "analytics": "分析",
+    "search": "検索"
+  },
+  "footer": {
+    "copyright": "© {{year}} OpenApp by Mrwain Organization",
+    "about": "概要",
+    "blog": "ブログ",
+    "legal": "法的情報",
+    "privacy": "プライバシー",
+    "license": "ライセンス"
+  },
+  "home": {
+    "searchResults": "検索結果",
+    "noAppsFound": "アプリが見つかりません",
+    "topApps": "人気アプリ",
+    "newArrivals": "新着",
+    "noAppsYet": "アプリがまだありません"
+  },
+  "auth": {
+    "title": "OpenApp",
+    "subtitle": "続行するにはログインしてください",
+    "description": "信頼できるアプリを見つけ、お気に入りを管理し、申請を一か所で管理できます。",
+    "piNetwork": "Pi Network",
+    "email": "メール",
+    "signInWithPi": "Pi Network でログイン",
+    "connecting": "接続中...",
+    "piBrowserRequired": "Pi でのログインには Pi Browser が必要です",
+    "benefit1": "Pi Network による安全なログイン。メールやパスワードは不要です。",
+    "benefit2": "アプリ一覧、広告、分析にすべてのデバイスからアクセスできます。",
+    "benefit3": "初めてですか？ Pi Browser をインストールして始めましょう。",
+    "note": "注意：OpenApp モバイルアプリを使用する場合は、メール認証をご利用ください。",
+    "welcomeBack": "おかえりなさい！"
+  },
+  "wallet": {
+    "availableBalance": "利用可能残高",
+    "withdrawEarnings": "収益を引き出す",
+    "amount": "金額 (Pi)",
+    "withdraw": "引き出す",
+    "withdrawalHistory": "出金履歴",
+    "noWithdrawals": "出金履歴はまだありません。",
+    "insufficientBalance": "残高が不足しています"
+  },
+  "currency": {
+    "symbol": "π",
+    "code": "Pi",
+    "amount": "{{amount}} π"
+  },
+  "language": {
+    "label": "言語",
+    "select": "言語を選択"
+  },
+  "profile": {
+    "language": "言語",
+    "languageHint": "インターフェースで使用する言語を選択してください。",
+    "languageUpdated": "言語を更新しました"
+  }
+}
